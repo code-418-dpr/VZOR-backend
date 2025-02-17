@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\WhoCame.Core\WhoCame.Core.csproj" />
+      <ProjectReference Include="..\WhoCame.Accounts.Contracts\WhoCame.Accounts.Contracts.csproj" />
+      <ProjectReference Include="..\WhoCame.Accounts.Domain\WhoCame.Accounts.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Commands\" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WhoCame.Accounts.Application\WhoCame.Accounts.Application.csproj" />
+      <ProjectReference Include="..\WhoCame.Accounts.Infrastructure\WhoCame.Accounts.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
