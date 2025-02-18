@@ -1,0 +1,21 @@
+﻿{
+  "Roles": {
+    "Admin": [
+      "read",
+      "create",
+      "update",
+      "delete"
+    ],
+    "Participant": [
+      "read"
+    ]
+  },
+  "Permissions": {
+    "Actions": [
+      "read",
+      "create",
+      "update",
+      "delete"
+    ]
+  }
+}

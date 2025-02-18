@@ -9,6 +9,7 @@ using WhoCame.Accounts.Application.Managers;
 using WhoCame.Accounts.Domain;
 using WhoCame.Accounts.Infrastructure.IdentityManagers;
 using WhoCame.Accounts.Infrastructure.Options;
+using WhoCame.Accounts.Infrastructure.Seeding;
 using WhoCame.Core.Common;
 using WhoCame.Core.Options;
 using WhoCame.Framework;
@@ -59,7 +60,7 @@ public static class DependencyInjection
         services.AddScoped<IRefreshSessionManager, RefreshSessionManager>();
 
         services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.ADMIN));
-        //services.AddScoped<AccountSeedService>();
+        services.AddScoped<AccountSeedService>();
         
         return services;
     }
@@ -87,7 +88,7 @@ public static class DependencyInjection
         services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         services.AddAuthorization();
-        //services.AddSingleton<AccountsSeeder>();
+        services.AddSingleton<AccountsSeeder>();
         
         return services;
     }
