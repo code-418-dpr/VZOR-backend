@@ -7,7 +7,9 @@ version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directories:
-      - "src"
+      - "src/Accounts"
+      - "src/Shared"
+      - "src/WhoCame.Web"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
