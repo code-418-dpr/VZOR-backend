@@ -20,10 +20,12 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Set up Docker Compose
-      uses: docker-practice/actions-setup-docker-compose@master
-      with:
-        version: latest
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+    - name: Check Docker Compose version
+      run: docker-compose --version
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -36,6 +38,7 @@ jobs:
       run: |
         docker-compose ps
         docker-compose logs
+
 
     
 
