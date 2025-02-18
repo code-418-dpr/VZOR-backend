@@ -7,7 +7,7 @@ version: 2
 updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directories:
-      - "backend"
+      - "/"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
