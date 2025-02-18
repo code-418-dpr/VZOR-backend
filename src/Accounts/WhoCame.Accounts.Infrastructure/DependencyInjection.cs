@@ -9,9 +9,11 @@ using WhoCame.Accounts.Application.Managers;
 using WhoCame.Accounts.Domain;
 using WhoCame.Accounts.Infrastructure.IdentityManagers;
 using WhoCame.Accounts.Infrastructure.Options;
+using WhoCame.Core.Common;
 using WhoCame.Core.Options;
 using WhoCame.Framework;
 using WhoCame.Framework.Authorization;
+using WhoCame.SharedKernel;
 
 namespace WhoCame.Accounts.Infrastructure;
 
@@ -26,6 +28,8 @@ public static class DependencyInjection
             .AddDbContexts()
             .AddAuthorizationServices()
             .AddDatabase();
+        
+        services.AddTransient<IDateTimeProvider, DateTimeProvider>();
         
         return services;
     }
@@ -64,6 +68,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<AccountsDbContext>();
+        services.AddAsyncInitializer<DbInitializer>();
         
         return services;
     }

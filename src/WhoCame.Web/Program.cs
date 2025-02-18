@@ -1,10 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using WhoCame.Accounts.Infrastructure;
 using WhoCame.Framework.Middlewares;
+using WhoCame.Web;
 using WhoCame.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddModules(builder.Configuration);
 
 builder.Services.AddLogger(builder.Configuration);
 builder.Services.AddSwagger();
@@ -21,4 +26,4 @@ app.UseExceptionMiddleware();
 
 app.MapControllers();
 
-app.Run();
+await app.InitAndRunAsync();
