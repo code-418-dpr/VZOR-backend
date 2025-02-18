@@ -20,6 +20,20 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    - name: Cache Build
+      uses: actions/cache@v3
+      with:
+        path: ~/.dotnet/build
+        key: ${{ runner.os }}-build-${{ hashFiles('**/*csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-build-
     - name: Install Docker Compose
       run: |
         sudo apt-get update
@@ -38,6 +52,7 @@ jobs:
       run: |
         docker-compose ps
         docker-compose logs
+
 
 
     
