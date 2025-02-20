@@ -1,16 +1,15 @@
 version: 2
 updates:
   - package-ecosystem: "nuget"
-    directories:
-      - "/"
+    directory: "/"
     schedule:
       interval: "daily"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-patch"]
+
   - package-ecosystem: "docker"
-    directories:
-      - "/"
+    directory: "/src/WhoCame.Web"
     schedule:
         interval: "daily"
     ignore:
