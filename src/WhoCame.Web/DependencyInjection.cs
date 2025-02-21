@@ -1,4 +1,6 @@
-﻿using WhoCame.Accounts.Application;
+﻿using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using WhoCame.Accounts.Application;
 using WhoCame.Accounts.Infrastructure;
 using WhoCame.Framework.Models;
 
@@ -16,6 +18,7 @@ public static class DependencyInjection
         
         return services;
     }
+    
     
     private static IServiceCollection AddFramework(this IServiceCollection services)
     {
