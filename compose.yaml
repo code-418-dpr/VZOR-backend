@@ -45,7 +45,23 @@
       - "6380:6379"
     volumes:
       - ./redisdata:/data
+  minio:
+    container_name: minio
+    image: minio/minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - minio-data:/data
+    command: server --console-address ":9001" /data
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
   
 volumes:
   postgres-data:
   redis-data:
+  minio-data:

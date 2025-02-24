@@ -3,6 +3,7 @@ using OpenTelemetry.Resources;
 using WhoCame.Accounts.Application;
 using WhoCame.Accounts.Infrastructure;
 using WhoCame.Framework.Models;
+using WhoCame.Visitors.Infrastructure;
 
 namespace WhoCame.Web;
 
@@ -14,6 +15,7 @@ public static class DependencyInjection
     {
         services
             .AddAccountsManagementModule(configuration)
+            .AddVisitorsModule(configuration)
             .AddFramework();
         
         return services;
@@ -35,6 +37,16 @@ public static class DependencyInjection
         services
             .AddAccountsApplication()
             .AddAccountsInfrastructure(configuration);
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddVisitorsModule(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services
+            .AddVisitorsInfrastructure(configuration);
         
         return services;
     }

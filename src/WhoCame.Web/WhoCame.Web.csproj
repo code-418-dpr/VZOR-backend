@@ -40,6 +40,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Accounts\WhoCame.Accounts.Controllers\WhoCame.Accounts.Controllers.csproj" />
       <ProjectReference Include="..\Shared\WhoCame.Framework\WhoCame.Framework.csproj" />
+      <ProjectReference Include="..\Visitors\WhoCame.Visitors.Application\WhoCame.Visitors.Application.csproj" />
+      <ProjectReference Include="..\Visitors\WhoCame.Visitors.Infrastructure\WhoCame.Visitors.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

@@ -40,6 +40,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Vision.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Vision.Controllers", "src\Vision\WhoCame.Vision.Controllers\WhoCame.Vision.Controllers.csproj", "{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visitors", "Visitors", "{4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Domain", "src\Visitors\WhoCame.Visitors.Domain\WhoCame.Visitors.Domain.csproj", "{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Application", "src\Visitors\WhoCame.Visitors.Application\WhoCame.Visitors.Application.csproj", "{19D43E56-B2B6-4B90-8FE5-809CC002AAE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Infrastructure", "src\Visitors\WhoCame.Visitors.Infrastructure\WhoCame.Visitors.Infrastructure.csproj", "{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Controllers", "src\Visitors\WhoCame.Visitors.Controllers\WhoCame.Visitors.Controllers.csproj", "{CEFA617A-FB97-4D6E-84B8-36A551D10D25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +74,11 @@ Global
 		{408D8FCD-9A0E-49D8-8266-56F199CECDC9} = {0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB}
 		{0D3A88D3-1C3A-413B-B93D-7E361371294C} = {0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB}
 		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513} = {0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB}
+		{4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46} = {E3E21B24-668A-4344-90CB-D823E4142BAA}
+		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
+		{19D43E56-B2B6-4B90-8FE5-809CC002AAE9} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
+		{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
+		{CEFA617A-FB97-4D6E-84B8-36A551D10D25} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE3713F6-25AE-4069-A282-076B4DAB079F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -114,5 +129,21 @@ Global
 		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D43E56-B2B6-4B90-8FE5-809CC002AAE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D43E56-B2B6-4B90-8FE5-809CC002AAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D43E56-B2B6-4B90-8FE5-809CC002AAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D43E56-B2B6-4B90-8FE5-809CC002AAE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEFA617A-FB97-4D6E-84B8-36A551D10D25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEFA617A-FB97-4D6E-84B8-36A551D10D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEFA617A-FB97-4D6E-84B8-36A551D10D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEFA617A-FB97-4D6E-84B8-36A551D10D25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -175,6 +175,11 @@
           "Swashbuckle.AspNetCore.SwaggerUI": "7.2.0"
         }
       },
+      "CommunityToolkit.HighPerformance": {
+        "type": "Transitive",
+        "resolved": "8.3.0",
+        "contentHash": "2zc0Wfr9OtEbLqm6J1Jycim/nKmYv+v12CytJ3tZGNzw7n3yjh1vNCMX0kIBaFBk3sw8g0pMR86QJGXGlArC+A=="
+      },
       "DeviceDetector.NET": {
         "type": "Transitive",
         "resolved": "6.3.3",
@@ -905,6 +910,18 @@
         "resolved": "1.6.22",
         "contentHash": "aBvunmrdu/x+4CaA/UP1Jx4xWGwk4kymhoIRnn2Vp+zi5/KOPQJ9EkSXHRUr01WcGKtYl3Au7XfkPJbU1G2sjQ=="
       },
+      "Minio": {
+        "type": "Transitive",
+        "resolved": "6.0.4",
+        "contentHash": "JckRL95hQ/eDHTQZ/BB7jeR0JyF+bOctMW6uriXHY5YPjCX61hiJGsswGjuDSEViKJEPxtPi3e4IwD/1TJ7PIw==",
+        "dependencies": {
+          "CommunityToolkit.HighPerformance": "8.3.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Logging": "8.0.0",
+          "System.IO.Hashing": "8.0.0",
+          "System.Reactive": "6.0.1"
+        }
+      },
       "Mono.TextTemplating": {
         "type": "Transitive",
         "resolved": "3.0.0",
@@ -1235,6 +1252,11 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
+      "System.IO.Hashing": {
+        "type": "Transitive",
+        "resolved": "8.0.0",
+        "contentHash": "ne1843evDugl0md7Fjzy6QjJrzsjh46ZKbhf8GwBXb5f/gw97J4bxMs0NQKifDuThh/f0bZ0e62NPl1jzTuRqA=="
+      },
       "System.IO.Pipelines": {
         "type": "Transitive",
         "resolved": "7.0.0",
@@ -1307,6 +1329,11 @@
           "System.Runtime": "4.3.0",
           "System.Threading": "4.3.0"
         }
+      },
+      "System.Reactive": {
+        "type": "Transitive",
+        "resolved": "6.0.1",
+        "contentHash": "rHaWtKDwCi9qJ3ObKo8LHPMuuwv33YbmQi7TcUK1C264V3MFnOr5Im7QgCTdLniztP3GJyeiSg5x8NqYJFqRmg=="
       },
       "System.Reflection": {
         "type": "Transitive",
@@ -1850,6 +1877,26 @@
       },
       "whocame.sharedkernel": {
         "type": "Project"
+      },
+      "whocame.visitors.application": {
+        "type": "Project",
+        "dependencies": {
+          "WhoCame.Core": "[1.0.0, )",
+          "WhoCame.Visitors.Domain": "[1.0.0, )"
+        }
+      },
+      "whocame.visitors.domain": {
+        "type": "Project",
+        "dependencies": {
+          "WhoCame.SharedKernel": "[1.0.0, )"
+        }
+      },
+      "whocame.visitors.infrastructure": {
+        "type": "Project",
+        "dependencies": {
+          "Minio": "[6.0.4, )",
+          "WhoCame.Visitors.Application": "[1.0.0, )"
+        }
       }
     }
   }
