@@ -1,11 +1,20 @@
-﻿using System.Data;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhoCame.SharedKernel.Constraints;
 using WhoCame.Visitors.Domain;
 
 namespace WhoCame.Visitors.Infrastructure.Configurations;
+
+public class StringListJsonConverter : ValueConverter<List<string>, string>
+{
+    public StringListJsonConverter() : base(
+        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null!),
+        v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null!)!)
+    {
+    }
+}
 
 public class VisitorConfiguration: IEntityTypeConfiguration<Visitor>
 {
@@ -31,11 +40,9 @@ public class VisitorConfiguration: IEntityTypeConfiguration<Visitor>
             .HasColumnName("middle_name")
             .IsRequired(false);
         
-        builder.Property(p => p.VisitorPhotos)
-            .HasConversion(
-                photos => JsonSerializer.Serialize(photos, JsonSerializerOptions.Default),
-                jsonPhoto => JsonSerializer.Deserialize<List<string>>(jsonPhoto, JsonSerializerOptions.Default)!)
+        builder.Property(v => v.VisitorPhotos)
+            .HasColumnName("visitor_photos")
             .HasColumnType("jsonb")
-            .HasColumnName("visitor_photos");
+            .HasConversion(new StringListJsonConverter());
     }
 }

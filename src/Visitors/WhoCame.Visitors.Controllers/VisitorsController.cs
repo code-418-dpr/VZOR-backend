@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WhoCame.Framework;
+using WhoCame.Framework.Processors;
+using WhoCame.Visitors.Application.Features.Commands.AddPhotosToVisitor;
 using WhoCame.Visitors.Application.Features.Commands.AddVisitor;
 using WhoCame.Visitors.Application.Features.Commands.DeleteVisitor;
 using WhoCame.Visitors.Contracts.Requests;
@@ -35,6 +37,27 @@ public class VisitorsController: ApplicationController
         if (result.IsFailure)
             return result.Errors.ToResponse();
 
+        return Ok(result);
+    }
+    
+    [HttpPost("addition-photos-to-visitors/{visitorId:guid}")]
+    public async Task<ActionResult> AddPetPhoto(
+        [FromRoute] Guid visitorId,
+        [FromForm] AddVisitorPhotosRequest request,
+        [FromServices] AddPhotosToVisitorHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        await using var fileProcessor = new FormFileProcessor();
+
+        var fileDtos = fileProcessor.Process(request.Files);
+
+        var command = new AddPhotosToVisitorCommand(visitorId, fileDtos);
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Errors.ToResponse();
+        
         return Ok(result);
     }
 }

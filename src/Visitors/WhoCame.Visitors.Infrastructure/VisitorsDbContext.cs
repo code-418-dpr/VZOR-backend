@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using WhoCame.Visitors.Domain;
+using WhoCame.Visitors.Infrastructure.Configurations;
 
 namespace WhoCame.Visitors.Infrastructure;
 
@@ -20,9 +21,7 @@ public class VisitorsDbContext(IConfiguration configuration): DbContext
     {
         modelBuilder.HasDefaultSchema("visitors");
         
-        modelBuilder.ApplyConfigurationsFromAssembly(
-            typeof(VisitorsDbContext).Assembly,
-            type => type.FullName?.Contains("Configurations") ?? false);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(VisitorsDbContext).Assembly);
     }
 
     private static readonly ILoggerFactory CreateLoggerFactory

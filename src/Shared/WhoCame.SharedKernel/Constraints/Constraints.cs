@@ -13,6 +13,8 @@ public static partial class Constraints
         @"^[\w-\.]{1,40}@([\w-]+\.)+[\w-]{2,4}$",
         RegexOptions.Singleline | RegexOptions.Compiled);
     
+    public static string[] Extensions = [".jpg", ".png", ".jpeg", ".svg"];
+    
     public enum Contexts
     {
         AuthContext,
