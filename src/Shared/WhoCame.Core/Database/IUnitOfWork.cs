@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace WhoCame.Accounts.Application.Database;
+namespace WhoCame.Core.Database;
 
 public interface IUnitOfWork
 {

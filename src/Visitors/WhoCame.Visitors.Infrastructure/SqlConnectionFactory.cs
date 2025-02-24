@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using WhoCame.Core.Database;
 
-namespace WhoCame.Accounts.Infrastructure;
+namespace WhoCame.Visitors.Infrastructure;
 
 public class SqlConnectionFactory : ISqlConnectionFactory
 {

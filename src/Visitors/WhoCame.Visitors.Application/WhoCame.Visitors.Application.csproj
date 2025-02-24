@@ -11,4 +11,12 @@
       <ProjectReference Include="..\WhoCame.Visitors.Domain\WhoCame.Visitors.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Commands\AddPhotosToVisitor\" />
+      <Folder Include="Features\Commands\DeleteVisitor\" />
+      <Folder Include="Features\Queries\GetFilteredAndSortedVisitorsWithPagination\" />
+      <Folder Include="Features\Queries\GetVisitorById\" />
+      <Folder Include="Features\Queries\GetVisitorsByFullName\" />
+    </ItemGroup>
+
 </Project>

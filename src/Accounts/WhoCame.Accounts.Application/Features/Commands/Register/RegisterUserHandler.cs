@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WhoCame.Accounts.Application.Database;
 using WhoCame.Accounts.Application.Managers;
 using WhoCame.Accounts.Domain;
 using WhoCame.Core.Abstractions;
+using WhoCame.Core.Database;
 using WhoCame.Core.Extension;
 using WhoCame.SharedKernel;
 using WhoCame.SharedKernel.Constraints;
@@ -29,7 +29,7 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
         IValidator<RegisterUserCommand> validator,
         RoleManager<Role> roleManager, 
         IAccountManager accountManager,
-        IUnitOfWork unitOfWork)
+        [FromKeyedServices(Constraints.Contexts.AuthContext)]IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _logger = logger;

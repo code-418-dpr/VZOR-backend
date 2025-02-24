@@ -2,13 +2,13 @@ using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 using WhoCame.Core.Database;
 
-namespace WhoCame.Accounts.Infrastructure;
+namespace WhoCame.Visitors.Infrastructure;
 
 public class UnitOfWork: IUnitOfWork
 {
-    private readonly AccountsDbContext _dbContext;
+    private readonly VisitorsDbContext _dbContext;
 
-    public UnitOfWork(AccountsDbContext dbContext)
+    public UnitOfWork(VisitorsDbContext dbContext)
     {
         _dbContext = dbContext;
     }

@@ -6,4 +6,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\WhoCame.Core\WhoCame.Core.csproj" />
+      <ProjectReference Include="..\..\Shared\WhoCame.Framework\WhoCame.Framework.csproj" />
+      <ProjectReference Include="..\WhoCame.Visitors.Application\WhoCame.Visitors.Application.csproj" />
+      <ProjectReference Include="..\WhoCame.Visitors.Contracts\WhoCame.Visitors.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>

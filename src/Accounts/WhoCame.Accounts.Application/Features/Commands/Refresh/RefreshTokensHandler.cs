@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using WhoCame.Accounts.Application.Database;
 using WhoCame.Accounts.Application.Managers;
 using WhoCame.Accounts.Contracts.Responses;
 using WhoCame.Core.Abstractions;
+using WhoCame.Core.Database;
 using WhoCame.Core.Extension;
 using WhoCame.Core.Models;
 using WhoCame.SharedKernel;
@@ -25,7 +25,7 @@ public class RefreshTokensHandler: ICommandHandler<RefreshTokensCommand, LoginRe
         IValidator<RefreshTokensCommand> validator,
         IDateTimeProvider dateTimeProvider,
         ITokenProvider tokenProvider,
-        IUnitOfWork unitOfWork)
+        [FromKeyedServices(Constraints.Contexts.AuthContext)]IUnitOfWork unitOfWork)
     {
         _refreshSessionManager = refreshSessionManager;
         _validator = validator;

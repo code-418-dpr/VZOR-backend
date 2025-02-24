@@ -4,17 +4,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WhoCame.Accounts.Application;
-using WhoCame.Accounts.Application.Database;
 using WhoCame.Accounts.Application.Managers;
 using WhoCame.Accounts.Domain;
 using WhoCame.Accounts.Infrastructure.IdentityManagers;
 using WhoCame.Accounts.Infrastructure.Options;
 using WhoCame.Accounts.Infrastructure.Seeding;
 using WhoCame.Core.Common;
+using WhoCame.Core.Database;
 using WhoCame.Core.Options;
 using WhoCame.Framework;
 using WhoCame.Framework.Authorization;
 using WhoCame.SharedKernel;
+using WhoCame.SharedKernel.Constraints;
 
 namespace WhoCame.Accounts.Infrastructure;
 
@@ -67,7 +68,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddKeyedScoped<IUnitOfWork, UnitOfWork>(Constraints.Contexts.AuthContext);
         services.AddScoped<AccountsDbContext>();
         services.AddAsyncInitializer<DbInitializer>();
         
@@ -76,7 +77,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDatabase(this IServiceCollection services)
     {
-        services.AddScoped<ISqlConnectionFactory,SqlConnectionFactory>();
+        services.AddKeyedScoped<ISqlConnectionFactory,SqlConnectionFactory>(Constraints.Contexts.AuthContext);
 
         //Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         

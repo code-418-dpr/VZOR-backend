@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Infrastruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Controllers", "src\Visitors\WhoCame.Visitors.Controllers\WhoCame.Visitors.Controllers.csproj", "{CEFA617A-FB97-4D6E-84B8-36A551D10D25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Contracts", "src\Visitors\WhoCame.Visitors.Contracts\WhoCame.Visitors.Contracts.csproj", "{3344D670-1653-4574-90B1-A1CBE87284CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,7 @@ Global
 		{19D43E56-B2B6-4B90-8FE5-809CC002AAE9} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
 		{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
 		{CEFA617A-FB97-4D6E-84B8-36A551D10D25} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
+		{3344D670-1653-4574-90B1-A1CBE87284CD} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE3713F6-25AE-4069-A282-076B4DAB079F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -145,5 +148,9 @@ Global
 		{CEFA617A-FB97-4D6E-84B8-36A551D10D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEFA617A-FB97-4D6E-84B8-36A551D10D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEFA617A-FB97-4D6E-84B8-36A551D10D25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3344D670-1653-4574-90B1-A1CBE87284CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3344D670-1653-4574-90B1-A1CBE87284CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3344D670-1653-4574-90B1-A1CBE87284CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3344D670-1653-4574-90B1-A1CBE87284CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
