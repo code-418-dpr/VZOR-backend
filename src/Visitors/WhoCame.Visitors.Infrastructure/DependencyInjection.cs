@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using WhoCame.Core.Database;
 using WhoCame.SharedKernel.Constraints;
+using WhoCame.Visitors.Application.Database;
 using WhoCame.Visitors.Application.FileProviders;
 using WhoCame.Visitors.Application.Repositories;
 using WhoCame.Visitors.Infrastructure.Options;
@@ -42,7 +43,9 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services)
     {
-        services.AddScoped<VisitorsDbContext>();
+        services.AddScoped<VisitorsWriteDbContext>();
+        services.AddScoped<VisitorsReadDbContext>();
+        services.AddScoped<IReadDbContext, VisitorsReadDbContext>();
 
         services.AddAsyncInitializer<DbInitializer>();
         

@@ -6,7 +6,7 @@ using WhoCame.Visitors.Domain;
 
 namespace WhoCame.Visitors.Infrastructure.Repository;
 
-public class VisitorRepository(VisitorsDbContext context): IVisitorRepository
+public class VisitorRepository(VisitorsWriteDbContext context): IVisitorRepository
 {
     public async Task AddAsync(Visitor visitor, CancellationToken cancellationToken = default)
     {

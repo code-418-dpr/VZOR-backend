@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Queries\GetFilteredAndSortedVisitorsWithPagination\" />
       <Folder Include="Features\Queries\GetVisitorById\" />
       <Folder Include="Features\Queries\GetVisitorsByFullName\" />
     </ItemGroup>

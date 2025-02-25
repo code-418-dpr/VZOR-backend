@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WhoCame.Visitors.Infrastructure;
 
-public class DbInitializer(VisitorsDbContext dbContext) : IAsyncInitializer
+public class DbInitializer(VisitorsWriteDbContext writeDbContext, VisitorsReadDbContext readDbContext) : IAsyncInitializer
 {
     public async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        await dbContext.Database.MigrateAsync(cancellationToken);
+        await writeDbContext.Database.MigrateAsync(cancellationToken);
     }
 }
