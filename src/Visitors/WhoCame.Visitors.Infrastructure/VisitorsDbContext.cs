@@ -14,7 +14,8 @@ public class VisitorsDbContext(IConfiguration configuration): DbContext
             .UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
             .UseLoggerFactory(CreateLoggerFactory)
             .EnableSensitiveDataLogging()
-            .UseSnakeCaseNamingConvention();
+            .UseSnakeCaseNamingConvention()
+            .LogTo(Console.WriteLine, LogLevel.Information);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

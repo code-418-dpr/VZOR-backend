@@ -2575,6 +2575,7 @@
           "EFCore.NamingConventions": "[9.0.0, )",
           "Extensions.Hosting.AsyncInitialization": "[3.0.1, )",
           "Minio": "[6.0.4, )",
+          "Newtonsoft.Json": "[13.0.3, )",
           "WhoCame.Visitors.Application": "[1.0.0, )"
         }
       }

@@ -54,7 +54,7 @@ public class AddPhotosToVisitorHandler: ICommandHandler<AddPhotosToVisitorComman
                 return Errors.General.NotFound(command.VisitorId);
 
             var filesData = command.FileDtos.Select(f => 
-                new FileData(f.Content, new FileInfo(f.FileName, BUCKET_NAME)));
+                new FileData(f.Content, new FileInfo(Guid.NewGuid().ToString(), BUCKET_NAME)));
 
             var paths = await _fileProvider.UploadFiles(filesData, cancellationToken);
             if(paths.IsFailure)

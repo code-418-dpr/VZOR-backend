@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 using WhoCame.SharedKernel.Constraints;
 using WhoCame.Visitors.Domain;
 
@@ -9,12 +10,21 @@ namespace WhoCame.Visitors.Infrastructure.Configurations;
 
 public class StringListJsonConverter : ValueConverter<List<string>, string>
 {
+    private static readonly JsonSerializerSettings JsonSerializerSettings = new()
+    {
+        ObjectCreationHandling = ObjectCreationHandling.Replace,
+        DefaultValueHandling = DefaultValueHandling.Ignore,
+        NullValueHandling = NullValueHandling.Ignore,
+        Formatting = Formatting.Indented
+    };
+
     public StringListJsonConverter() : base(
-        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null!),
-        v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null!)!)
+        v => JsonConvert.SerializeObject(v, JsonSerializerSettings),
+        v => JsonConvert.DeserializeObject<List<string>>(v, JsonSerializerSettings)!)
     {
     }
 }
+
 
 public class VisitorConfiguration: IEntityTypeConfiguration<Visitor>
 {
@@ -39,10 +49,8 @@ public class VisitorConfiguration: IEntityTypeConfiguration<Visitor>
             .HasMaxLength(Constraints.MAX_VALUE_LENGTH)
             .HasColumnName("middle_name")
             .IsRequired(false);
-        
+
         builder.Property(v => v.VisitorPhotos)
-            .HasColumnName("visitor_photos")
-            .HasColumnType("jsonb")
-            .HasConversion(new StringListJsonConverter());
+            .HasColumnName("visitor_photos");
     }
 }
