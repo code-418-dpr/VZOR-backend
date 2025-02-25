@@ -6,6 +6,7 @@
 [![code size](https://img.shields.io/github/languages/code-size/code-418-dpr/WhoCame-backend.svg)](https://github.com/code-418-dpr/WhoCame-backend)
 
 [![build](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/build.yaml/badge.svg)](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/build.yaml)
+[![CodeQL (C#, GH Actions)](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/codeql.yaml/badge.svg)](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/codeql.yaml)
 
 Бэкенд для проекта [WhoCame](https://github.com/code-418-dpr/WhoCame)
 
