@@ -4,7 +4,7 @@ using WhoCame.Framework.Processors;
 using WhoCame.Visitors.Application.Features.Commands.AddPhotosToVisitor;
 using WhoCame.Visitors.Application.Features.Commands.AddVisitor;
 using WhoCame.Visitors.Application.Features.Commands.DeleteVisitor;
-using WhoCame.Visitors.Contracts.Requests;
+using WhoCame.Visitors.Controllers.Requests;
 
 namespace WhoCame.Visitors.Controllers;
 
