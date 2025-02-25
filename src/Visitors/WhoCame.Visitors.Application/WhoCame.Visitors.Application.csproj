@@ -11,9 +11,4 @@
       <ProjectReference Include="..\WhoCame.Visitors.Domain\WhoCame.Visitors.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\Queries\GetVisitorById\" />
-      <Folder Include="Features\Queries\GetVisitorsByFullName\" />
-    </ItemGroup>
-
 </Project>

@@ -5,6 +5,7 @@ using WhoCame.Visitors.Application.Features.Commands.AddPhotosToVisitor;
 using WhoCame.Visitors.Application.Features.Commands.AddVisitor;
 using WhoCame.Visitors.Application.Features.Commands.DeleteVisitor;
 using WhoCame.Visitors.Application.Features.Queries.GetFilteredAndSortedVisitorsWithPagination;
+using WhoCame.Visitors.Application.Features.Queries.GetVisitorById;
 using WhoCame.Visitors.Controllers.Requests;
 
 namespace WhoCame.Visitors.Controllers;
@@ -34,6 +35,21 @@ public class VisitorsController: ApplicationController
         return Ok(result);
     }
     
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult> GetById(
+        [FromRoute] Guid id,
+        [FromServices] GetVisitorByIdHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetVisitorByIdQuery(id);
+
+        var result = await handler.Handle(query, cancellationToken);
+
+        if (result.IsFailure)
+            result.Errors.ToResponse();
+
+        return Ok(result);
+    }
     
     [HttpPost("CreationVisitor")]
     public async Task<IActionResult> CreateVisitor(
