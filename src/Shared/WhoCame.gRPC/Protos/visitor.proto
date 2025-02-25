@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "VisitorService";
+
+package visitor;
+
+service Visitor {
+  rpc SendVisitorInfo(VisitorRequest) returns (VisitorResponse);
+}
+
+message VisitorRequest{
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string middleName = 4;
+  
+  repeated bytes photos = 5;
+}
+
+message VisitorResponse{
+  bool isSuccess = 1;
+}
