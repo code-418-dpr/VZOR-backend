@@ -6,13 +6,13 @@ on:
     paths:
       - "**.cs"
       - "**.csproj"
-      - ".github"
+      - ".github/**"
   pull_request:
     branches: [ "main" ]
     paths:
       - "**.cs"
       - "**.csproj"
-      - ".github"
+      - ".github/**"
   schedule:
     - cron: '0 0 * * 1'
 
