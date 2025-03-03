@@ -18,13 +18,13 @@
       },
       "Grpc.AspNetCore": {
         "type": "Direct",
-        "requested": "[2.64.0, )",
-        "resolved": "2.64.0",
-        "contentHash": "+UX5rIy4c4kFJv1WIXONG3sgn9oHN4epO3EILYAGbh6ZCZWdedK/uMpRPal+NuxYi+YDAILksiIsYRTmEbiNOQ==",
+        "requested": "[2.67.0, )",
+        "resolved": "2.67.0",
+        "contentHash": "WjC3+Ri748j6IHYY73zwRPzJV0WFN97h9IkXrgcghk0WAgewDr03uUJzaSMC+qW1O7PcQNdUg3Pfb+73v0pxIQ==",
         "dependencies": {
           "Google.Protobuf": "3.27.0",
-          "Grpc.AspNetCore.Server.ClientFactory": "2.64.0",
-          "Grpc.Tools": "2.64.0"
+          "Grpc.AspNetCore.Server.ClientFactory": "2.67.0",
+          "Grpc.Tools": "2.67.0"
         }
       },
       "Microsoft.AspNetCore.OpenApi": {
@@ -266,56 +266,56 @@
       },
       "Grpc.AspNetCore.Server": {
         "type": "Transitive",
-        "resolved": "2.64.0",
-        "contentHash": "Dxra1DeDa/57pcembSG8pA7oyD3uCH+gv1+3LJpFzCQTE5F0DG+VqPh/dZph62WWT5kPMYSqF1ezS+9FrFZmGA==",
+        "resolved": "2.67.0",
+        "contentHash": "CDWB7GLhi4XN2Luw7gDbZQhGaMuMb9yDDwbBc9MMfmXFJvzALEK1hsbBaILzd8uDmX9E5VPMcqQ4mQyHvQ2HmA==",
         "dependencies": {
-          "Grpc.Net.Common": "2.64.0"
+          "Grpc.Net.Common": "2.67.0"
         }
       },
       "Grpc.AspNetCore.Server.ClientFactory": {
         "type": "Transitive",
-        "resolved": "2.64.0",
-        "contentHash": "J8DXFn/oT1yn+B3TJWnoygO+7S+WqUo47K43LgvtkcXbtkcJs246lYLPkcy09bjoCDFLD9u9G5FYtPF5i+W9Kg==",
+        "resolved": "2.67.0",
+        "contentHash": "O5qaBd7T8yph5JHikA3lafYqsn+2QPM7Dwk0e/7HniiM4cIHpfdiBX5TSy/+5IIppZ27QeLYFgftK7QsG9uIkQ==",
         "dependencies": {
-          "Grpc.AspNetCore.Server": "2.64.0",
-          "Grpc.Net.ClientFactory": "2.64.0"
+          "Grpc.AspNetCore.Server": "2.67.0",
+          "Grpc.Net.ClientFactory": "2.67.0"
         }
       },
       "Grpc.Core.Api": {
         "type": "Transitive",
-        "resolved": "2.64.0",
-        "contentHash": "CFwvZT56TU9D4Znz2qGz2S7XtXjo+t2DlTsa12vs+rKRwOuUI3dv/5vnh7LRgMDcumWOzR8L6IbtCYtJmcp3Rg=="
+        "resolved": "2.67.0",
+        "contentHash": "cL1/2f8kc8lsAGNdfCU25deedXVehhLA6GXKLLN4hAWx16XN7BmjYn3gFU+FBpir5yJynvDTHEypr3Tl0j7x/Q=="
       },
       "Grpc.Net.Client": {
         "type": "Transitive",
-        "resolved": "2.64.0",
-        "contentHash": "48sLEzEyAi3sIxunCPlz6st3WDUtD3fwya4lv9eeNrkLqs/qo4AosImYsMleS638ShQ9DD4s9DAfyQW3k4LgZQ==",
+        "resolved": "2.67.0",
+        "contentHash": "ofTjJQfegWkVlk5R4k/LlwpcucpsBzntygd4iAeuKd/eLMkmBWoXN+xcjYJ5IibAahRpIJU461jABZvT6E9dwA==",
         "dependencies": {
-          "Grpc.Net.Common": "2.64.0",
+          "Grpc.Net.Common": "2.67.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.0"
         }
       },
       "Grpc.Net.ClientFactory": {
         "type": "Transitive",
-        "resolved": "2.64.0",
-        "contentHash": "k/CACy93x7+/qKXao4SAWqO7vnqt7GxyPdKUe7OJpbH8mxkONJBelIE9M5sQwHRo1Y/R9bGR2QqXz4u1SZEsNA==",
+        "resolved": "2.67.0",
+        "contentHash": "owkRL6j8ZXvLnn8SsFGCRiWoe/2wGv+u+TASAylzUtGbHLnw7IiFRoeTs0IgpCNTETvlMLVb0gHDiLGo+mJZ6g==",
         "dependencies": {
-          "Grpc.Net.Client": "2.64.0",
+          "Grpc.Net.Client": "2.67.0",
           "Microsoft.Extensions.Http": "6.0.0"
         }
       },
       "Grpc.Net.Common": {
         "type": "Transitive",
-        "resolved": "2.64.0",
-        "contentHash": "j0L9suu8a81/TuJmb6UgeZ/MHrYVjzI4clEYTOgAyA5P1onOkNMQkyMWSP+YwKLDYVIt0tmODK+yaau9Lgobpg==",
+        "resolved": "2.67.0",
+        "contentHash": "gazn1cD2Eol0/W5ZJRV4PYbNrxJ9oMs8pGYux5S9E4MymClvl7aqYSmpqgmWAUWvziRqK9K+yt3cjCMfQ3x/5A==",
         "dependencies": {
-          "Grpc.Core.Api": "2.64.0"
+          "Grpc.Core.Api": "2.67.0"
         }
       },
       "Grpc.Tools": {
         "type": "Transitive",
-        "resolved": "2.64.0",
-        "contentHash": "W5RrhDFHUhioASktxfuDs5fTjWUxwegljZAig9zFL8nWNskeyQA6OXN2choWKYxGrljer25VqCJCMbWz7XHvqg=="
+        "resolved": "2.67.0",
+        "contentHash": "AQwGGe1dhCWlO72dTW4XtZBsvE9+mHt5rUpVOPjX9Q6sYZZ0GFyqs+7DjFeulaHKjsOg7Wteob1oq7a++SJWgA=="
       },
       "Humanizer.Core": {
         "type": "Transitive",
