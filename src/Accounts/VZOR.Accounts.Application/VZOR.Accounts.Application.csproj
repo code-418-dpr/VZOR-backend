@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\VZOR.Core\VZOR.Core.csproj" />
+      <ProjectReference Include="..\VZOR.Accounts.Contracts\VZOR.Accounts.Contracts.csproj" />
+      <ProjectReference Include="..\VZOR.Accounts.Domain\VZOR.Accounts.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Commands\" />
+    </ItemGroup>
+
+</Project>

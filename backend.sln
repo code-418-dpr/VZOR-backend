@@ -9,50 +9,42 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{2A71C0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accounts", "Accounts", "{94698EAD-0199-49B5-87B4-AD5F4E16B94F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Web", "src\WhoCame.Web\WhoCame.Web.csproj", "{FE3713F6-25AE-4069-A282-076B4DAB079F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Web", "src\VZOR.Web\VZOR.Web.csproj", "{FE3713F6-25AE-4069-A282-076B4DAB079F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Accounts.Domain", "src\Accounts\WhoCame.Accounts.Domain\WhoCame.Accounts.Domain.csproj", "{8944A454-D152-49C6-9CEE-1B82EF33B530}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Accounts.Domain", "src\Accounts\VZOR.Accounts.Domain\VZOR.Accounts.Domain.csproj", "{8944A454-D152-49C6-9CEE-1B82EF33B530}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Accounts.Infrastructure", "src\Accounts\WhoCame.Accounts.Infrastructure\WhoCame.Accounts.Infrastructure.csproj", "{4C8C6072-7E67-438A-B538-85A0088D3658}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Accounts.Infrastructure", "src\Accounts\VZOR.Accounts.Infrastructure\VZOR.Accounts.Infrastructure.csproj", "{4C8C6072-7E67-438A-B538-85A0088D3658}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Accounts.Application", "src\Accounts\WhoCame.Accounts.Application\WhoCame.Accounts.Application.csproj", "{39393E07-5C26-4858-BFB1-41E17ACFB6F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Accounts.Application", "src\Accounts\VZOR.Accounts.Application\VZOR.Accounts.Application.csproj", "{39393E07-5C26-4858-BFB1-41E17ACFB6F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Accounts.Controllers", "src\Accounts\WhoCame.Accounts.Controllers\WhoCame.Accounts.Controllers.csproj", "{9AE140ED-C9F2-4354-B7D8-1A58BD3CD7B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Accounts.Controllers", "src\Accounts\VZOR.Accounts.Controllers\VZOR.Accounts.Controllers.csproj", "{9AE140ED-C9F2-4354-B7D8-1A58BD3CD7B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Accounts.Contracts", "src\Accounts\WhoCame.Accounts.Contracts\WhoCame.Accounts.Contracts.csproj", "{95753191-56DC-4EF5-BBB1-924CF153B1BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Accounts.Contracts", "src\Accounts\VZOR.Accounts.Contracts\VZOR.Accounts.Contracts.csproj", "{95753191-56DC-4EF5-BBB1-924CF153B1BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.SharedKernel", "src\Shared\WhoCame.SharedKernel\WhoCame.SharedKernel.csproj", "{E57A8442-E908-49CD-AD10-221DC2371F5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.SharedKernel", "src\Shared\VZOR.SharedKernel\VZOR.SharedKernel.csproj", "{E57A8442-E908-49CD-AD10-221DC2371F5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Core", "src\Shared\WhoCame.Core\WhoCame.Core.csproj", "{D3EE510D-DBBA-40D7-B172-BB1181BA06C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Core", "src\Shared\VZOR.Core\VZOR.Core.csproj", "{D3EE510D-DBBA-40D7-B172-BB1181BA06C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Framework", "src\Shared\WhoCame.Framework\WhoCame.Framework.csproj", "{4DC87FE5-A11A-48FF-91C1-CC62E6010786}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Framework", "src\Shared\VZOR.Framework\VZOR.Framework.csproj", "{4DC87FE5-A11A-48FF-91C1-CC62E6010786}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{395C453A-96A9-433A-AC32-F986BFEE37F2}"
 	ProjectSection(SolutionItems) = preProject
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vision", "Vision", "{0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Vision.Infrastructure", "src\Vision\WhoCame.Vision.Infrastructure\WhoCame.Vision.Infrastructure.csproj", "{408D8FCD-9A0E-49D8-8266-56F199CECDC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Images.Domain", "src\Images\VZOR.Images.Domain\VZOR.Images.Domain.csproj", "{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Vision.Application", "src\Vision\WhoCame.Vision.Application\WhoCame.Vision.Application.csproj", "{0D3A88D3-1C3A-413B-B93D-7E361371294C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Images.Application", "src\Images\VZOR.Images.Application\VZOR.Images.Application.csproj", "{19D43E56-B2B6-4B90-8FE5-809CC002AAE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Vision.Controllers", "src\Vision\WhoCame.Vision.Controllers\WhoCame.Vision.Controllers.csproj", "{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Images.Infrastructure", "src\Images\VZOR.Images.Infrastructure\VZOR.Images.Infrastructure.csproj", "{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visitors", "Visitors", "{4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Images.Controllers", "src\Images\VZOR.Images.Controllers\VZOR.Images.Controllers.csproj", "{CEFA617A-FB97-4D6E-84B8-36A551D10D25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Domain", "src\Visitors\WhoCame.Visitors.Domain\WhoCame.Visitors.Domain.csproj", "{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.Images.Contracts", "src\Images\VZOR.Images.Contracts\VZOR.Images.Contracts.csproj", "{3344D670-1653-4574-90B1-A1CBE87284CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Application", "src\Visitors\WhoCame.Visitors.Application\WhoCame.Visitors.Application.csproj", "{19D43E56-B2B6-4B90-8FE5-809CC002AAE9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Infrastructure", "src\Visitors\WhoCame.Visitors.Infrastructure\WhoCame.Visitors.Infrastructure.csproj", "{661DDD99-6079-4B1E-93C7-AF2A1AFD25CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Controllers", "src\Visitors\WhoCame.Visitors.Controllers\WhoCame.Visitors.Controllers.csproj", "{CEFA617A-FB97-4D6E-84B8-36A551D10D25}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.Visitors.Contracts", "src\Visitors\WhoCame.Visitors.Contracts\WhoCame.Visitors.Contracts.csproj", "{3344D670-1653-4574-90B1-A1CBE87284CD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhoCame.gRPC", "src\Shared\WhoCame.gRPC\WhoCame.gRPC.csproj", "{4620756D-27B1-4AC6-9384-02454ECA0A9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZOR.gRPC", "src\Shared\VZOR.gRPC\VZOR.gRPC.csproj", "{4620756D-27B1-4AC6-9384-02454ECA0A9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,10 +66,6 @@ Global
 		{E57A8442-E908-49CD-AD10-221DC2371F5E} = {2A71C0FF-8F5E-4E50-B811-36D980EF4BFA}
 		{D3EE510D-DBBA-40D7-B172-BB1181BA06C0} = {2A71C0FF-8F5E-4E50-B811-36D980EF4BFA}
 		{4DC87FE5-A11A-48FF-91C1-CC62E6010786} = {2A71C0FF-8F5E-4E50-B811-36D980EF4BFA}
-		{0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB} = {E3E21B24-668A-4344-90CB-D823E4142BAA}
-		{408D8FCD-9A0E-49D8-8266-56F199CECDC9} = {0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB}
-		{0D3A88D3-1C3A-413B-B93D-7E361371294C} = {0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB}
-		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513} = {0D2666CB-8D81-46C9-97DC-61ECEBC7F6BB}
 		{4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46} = {E3E21B24-668A-4344-90CB-D823E4142BAA}
 		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
 		{19D43E56-B2B6-4B90-8FE5-809CC002AAE9} = {4B6CC2A6-FE18-49BB-8030-12EAEFBD1D46}
@@ -123,18 +111,6 @@ Global
 		{4DC87FE5-A11A-48FF-91C1-CC62E6010786}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DC87FE5-A11A-48FF-91C1-CC62E6010786}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DC87FE5-A11A-48FF-91C1-CC62E6010786}.Release|Any CPU.Build.0 = Release|Any CPU
-		{408D8FCD-9A0E-49D8-8266-56F199CECDC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{408D8FCD-9A0E-49D8-8266-56F199CECDC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{408D8FCD-9A0E-49D8-8266-56F199CECDC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{408D8FCD-9A0E-49D8-8266-56F199CECDC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D3A88D3-1C3A-413B-B93D-7E361371294C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D3A88D3-1C3A-413B-B93D-7E361371294C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D3A88D3-1C3A-413B-B93D-7E361371294C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D3A88D3-1C3A-413B-B93D-7E361371294C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6BB9AC5-ADAE-4717-970A-F6FDFEE74513}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD26D54C-1DFF-4D89-AA20-CB47F885DADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
