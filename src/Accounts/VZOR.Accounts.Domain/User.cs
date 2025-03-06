@@ -13,6 +13,7 @@ public class User:IdentityUser<Guid>
     public IReadOnlyList<Role> Roles => _roles;
     public Guid? ParticipantAccountId { get; set; }
     public ParticipantAccount? ParticipantAccount { get; set; }
+    public bool IsActive { get; set; }
     
     public static User CreateAdmin(string userName, string email, Role role)
     {
@@ -20,7 +21,8 @@ public class User:IdentityUser<Guid>
         {
             UserName = userName,
             Email = email,
-            _roles = [role]
+            _roles = [role],
+            IsActive = true
         };
     }
     
@@ -31,7 +33,8 @@ public class User:IdentityUser<Guid>
         return new User
         {
             Email = email,
-            _roles = [role]
+            _roles = [role],
+            IsActive = true
         };
     }
 }

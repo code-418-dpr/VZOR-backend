@@ -12,5 +12,10 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         
         builder.HasMany(u => u.Roles)
             .WithMany(r => r.Users);
+        
+        builder.Property(u => u.IsActive)
+            .HasDefaultValue(true)
+            .IsRequired()
+            .HasColumnName("is_active");
     }
 }

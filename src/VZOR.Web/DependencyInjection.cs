@@ -4,6 +4,7 @@ using VZOR.Framework.Models;
 using VZOR.Images.Application;
 using VZOR.Images.Infrastructure;
 
+
 namespace VZOR.Web;
 
 public static class DependencyInjection
