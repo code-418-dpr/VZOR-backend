@@ -34,14 +34,21 @@
 ### Посредством Docker
 
 1. Установите Docker.
-2. Настройте файл [appsetting.Docker.json](src/VZOR.Web/appsettings.Docker.json), прописав собственные строки
+2. Установите .NET SDK, а также EF Core. Последний можно добавить командой:
+
+```shell
+dotnet tool install --global dotnet-ef
+```
+
+3. Настройте файл [appsetting.Docker.json](src/VZOR.Web/appsettings.Docker.json), прописав собственные строки
    подключения (они должны совпадать с указанными в [compose.yaml](compose.yaml))
-3. Создайте файл `.env`  и настройте все описанные там параметры.
-4. Создайте миграции к базе данных:
+4. Создайте файл `.env`  и настройте все описанные там параметры.
+5. Создайте миграции к базе данных:
 
 ```shell
 cd src
 dotnet ef migrations add <название миграции> --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
+cd ..
 ```
 
 Если миграции не применились автоматически (вместе с созданием базы данных), их можно применить вручную:
@@ -49,12 +56,13 @@ dotnet ef migrations add <название миграции> --startup-project .
 ```shell
 cd src
 dotnet ef database update --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
+cd ..
 ```
 
-5. Запустите сборку и подъём образа:
+6. Запустите сборку и подъём образа:
 
 ```shell
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 Теперь можно использовать бэкенд по адресу http://localhost:8080. Документация к бэкенду доступна в
