@@ -1,12 +1,12 @@
 # VZOR-backend
 
-[![license](https://img.shields.io/github/license/code-418-dpr/WhoCame-backend)](https://opensource.org/licenses/MIT)
-[![release](https://img.shields.io/github/v/release/code-418-dpr/WhoCame-backend?include_prereleases)](https://github.com/code-418-dpr/WhoCame-backend/releases)
-[![downloads](https://img.shields.io/github/downloads/code-418-dpr/WhoCame-backend/total)](https://github.com/code-418-dpr/WhoCame-backend/releases)
-[![code size](https://img.shields.io/github/languages/code-size/code-418-dpr/WhoCame-backend.svg)](https://github.com/code-418-dpr/WhoCame-backend)
+[![license](https://img.shields.io/github/license/code-418-dpr/VZOR-backend)](https://opensource.org/licenses/MIT)
+[![release](https://img.shields.io/github/v/release/code-418-dpr/VZOR-backend?include_prereleases)](https://github.com/code-418-dpr/VZOR-backend/releases)
+[![downloads](https://img.shields.io/github/downloads/code-418-dpr/VZOR-backend/total)](https://github.com/code-418-dpr/VZOR-backend/releases)
+[![code size](https://img.shields.io/github/languages/code-size/code-418-dpr/VZOR-backend.svg)](https://github.com/code-418-dpr/VZOR-backend)
 
-[![build](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/build.yaml/badge.svg)](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/build.yaml)
-[![CodeQL (C#, GH Actions)](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/codeql.yaml/badge.svg)](https://github.com/code-418-dpr/WhoCame-backend/actions/workflows/codeql.yaml)
+[![build](https://github.com/code-418-dpr/VZOR-backend/actions/workflows/build.yaml/badge.svg)](https://github.com/code-418-dpr/VZOR-backend/actions/workflows/build.yaml)
+[![CodeQL (C#, GH Actions)](https://github.com/code-418-dpr/VZOR-backend/actions/workflows/codeql.yaml/badge.svg)](https://github.com/code-418-dpr/VZOR-backend/actions/workflows/codeql.yaml)
 
 Бэкенд для проекта [VZOR](https://github.com/code-418-dpr/VZOR)
 
@@ -34,59 +34,15 @@
 ### Посредством Docker
 
 1. Установите Docker.
-2. Настройте appsetting.Docker.json файл, прописав собственные строки подключения(они должны совпадать с указанными в docker-compose)
-
-Пример:
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=host;Port=port;Database=database;User Id=user;Password=password;",
-    "Seq": "http://seq:port",
-    "Redis": "redis:port"
-  },
-  "Minio": {
-    "Endpoint": "minio:port",
-    "AccessKey": "minioadmin", 
-    "SecretKey": "minioadmin",
-    "WithSsl": false
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning",
-      "Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware": "Information"
-    }
-  },
-  "RefreshSession": {
-    "ExpiredDaysTime": 30
-  },
-  "Jwt": {
-    "Issuer": "http://minoddein-company/api",
-    "Audience": "https://minoddein-company.ru",
-    "Key": "samndoiasnd089i32ni9w09jds9c9020masopdcmao",
-    "ExpiredMinutesTime": 60
-  },
-  "EntityDeletion": {
-    "ExpiredDays": 30
-  },
-  "AllowedHosts": "*"
-}
-
-```
-
-3. Создайте файл `.env`  и настройте все описанные там параметры.
-
-```shell
-ADMIN__USERNAME=admin
-ADMIN__EMAIL=adming@admin.com
-ADMIN__PASSWORD=adming
-```
-
-4. Запустите сборку и подъём образа:
+2. Настройте файл [appsetting.Docker.json](src/VZOR.Web/appsettings.Docker.json), прописав собственные строки
+   подключения (они должны совпадать с указанными в [compose.yaml](compose.yaml))
+3. Создайте файл `.env` на основе [.env.template](.env.template) и настройте все описанные там параметры.
+4. Запустите контейнер:
 
 ```shell
 docker-compose up -d
 ```
 
-5. Теперь вы можете использовать backend, работающий через адрес http://localhost:8080, а также через swagger  http://localhost:8080/swagger
+Теперь можно использовать бэкенд по адресу http://localhost:8080. Документация к бэкенду доступна в
+интерфейсе [Swagger](http://localhost:8080/swagger).
 
