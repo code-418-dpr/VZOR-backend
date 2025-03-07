@@ -82,11 +82,28 @@ ADMIN__EMAIL=adming@admin.com
 ADMIN__PASSWORD=adming
 ```
 
-4. Запустите сборку и подъём образа:
+4.Создайте миграции к базе данных:
+
+```shell
+cd src
+
+dotnet ef migrations add <Название миграции> --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
+```
+
+Также, вручную можно применить миграции, если они не применились автоматически вместе с созданием базы данных:
+
+
+```shell
+cd src
+
+dotnet ef database update --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
+```
+
+5. Запустите сборку и подъём образа:
 
 ```shell
 docker-compose up -d
 ```
 
-5. Теперь вы можете использовать backend, работающий через адрес http://localhost:8080, а также через swagger  http://localhost:8080/swagger
+6. Теперь вы можете использовать backend, работающий через адрес http://localhost:8080, а также через swagger  http://localhost:8080/swagger
 
