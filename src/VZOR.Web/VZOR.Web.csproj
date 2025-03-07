@@ -34,12 +34,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Accounts\VZOR.Accounts.Controllers\VZOR.Accounts.Controllers.csproj" />
       <ProjectReference Include="..\Images\VZOR.Images.Application\VZOR.Images.Application.csproj" />
       <ProjectReference Include="..\Images\VZOR.Images.Infrastructure\VZOR.Images.Infrastructure.csproj" />
@@ -47,6 +41,12 @@
       <ProjectReference Include="..\Visitors\VZOR.Images.Application\VZOR.Images.Application.csproj" />
       <ProjectReference Include="..\Visitors\VZOR.Images.Controllers\VZOR.Images.Controllers.csproj" />
       <ProjectReference Include="..\Visitors\VZOR.Images.Infrastructure\VZOR.Images.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

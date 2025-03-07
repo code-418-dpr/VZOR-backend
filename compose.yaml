@@ -3,7 +3,12 @@
     image: web
     build:
       context: .
-      dockerfile: src/WhoCame.Web/Dockerfile  
+      dockerfile: src/VZOR.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "8080:8080"
+    
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -60,7 +65,7 @@
       interval: 10s
       timeout: 5s
       retries: 3
-  
+
 volumes:
   postgres-data:
   redis-data:

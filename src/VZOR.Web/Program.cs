@@ -19,15 +19,8 @@ builder.Services.AddSwagger();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
-
-//await accountsSeeder.SeedAsync();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseExceptionMiddleware();
 

@@ -9,11 +9,6 @@ public class DbInitializer(AccountsDbContext dbContext, IServiceScopeFactory ser
 {
     public async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        if (!await dbContext.Database.CanConnectAsync(cancellationToken))
-        {
-            await dbContext.Database.EnsureCreatedAsync(cancellationToken);
-        }
-        
         await dbContext.Database.MigrateAsync(cancellationToken);
         
         using var scope = serviceScopeFactory.CreateScope();
