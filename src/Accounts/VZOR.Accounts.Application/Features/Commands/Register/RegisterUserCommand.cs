@@ -3,8 +3,6 @@
 namespace VZOR.Accounts.Application.Features.Commands.Register;
 
 public record RegisterUserCommand(
-    string FirstName,
-    string LastName,
-    string? MiddleName,
+    string Name,
     string Email,
     string Password): ICommand;

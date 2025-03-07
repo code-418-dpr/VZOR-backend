@@ -9,19 +9,10 @@ public class RegisterUserCommandValidator: AbstractValidator<RegisterUserCommand
 {
     public RegisterUserCommandValidator()
     {
-        RuleFor(r => r.FirstName)
+        RuleFor(r => r.Name)
             .NotEmpty()
             .MaximumLength(Constraints.MAX_VALUE_LENGTH)
-            .WithError(Errors.General.ValueIsInvalid("firstName"));
-        
-        RuleFor(r => r.LastName)
-            .NotEmpty()
-            .MaximumLength(Constraints.MAX_VALUE_LENGTH)
-            .WithError(Errors.General.ValueIsInvalid("lastName"));
-        
-        RuleFor(r => r.MiddleName)
-            .MaximumLength(Constraints.MAX_VALUE_LENGTH)
-            .WithError(Errors.General.ValueIsInvalid("middleName"));
+            .WithError(Errors.General.ValueIsInvalid("name"));
         
         RuleFor(r => r.Email)
             .NotEmpty()

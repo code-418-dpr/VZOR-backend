@@ -2,4 +2,4 @@
 
 namespace VZOR.Accounts.Application.Features.Commands.Refresh;
 
-public record RefreshTokensCommand(string AccessToken, Guid RefreshToken) : ICommand;
+public record RefreshTokensCommand(Guid RefreshToken) : ICommand;

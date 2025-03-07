@@ -63,11 +63,7 @@ public class RegisterUserHandler : ICommandHandler<RegisterUserCommand>
             if (!result.Succeeded)
                 Error.Failure("cannot.create.user","Can not create user");
 
-            var participantAccount = new ParticipantAccount(
-                user, 
-                command.FirstName,
-                command.LastName,
-                command.MiddleName);
+            var participantAccount = new ParticipantAccount(user, command.Name);
             
             await _accountManager.CreateParticipantAccount(participantAccount, cancellationToken);
 
