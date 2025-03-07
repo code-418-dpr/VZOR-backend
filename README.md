@@ -36,8 +36,22 @@
 1. Установите Docker.
 2. Настройте файл [appsetting.Docker.json](src/VZOR.Web/appsettings.Docker.json), прописав собственные строки
    подключения (они должны совпадать с указанными в [compose.yaml](compose.yaml))
-3. Создайте файл `.env` на основе [.env.template](.env.template) и настройте все описанные там параметры.
-4. Запустите контейнер:
+3. Создайте файл `.env`  и настройте все описанные там параметры.
+4. Создайте миграции к базе данных:
+
+```shell
+cd src
+dotnet ef migrations add <название миграции> --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
+```
+
+Если миграции не применились автоматически (вместе с созданием базы данных), их можно применить вручную:
+
+```shell
+cd src
+dotnet ef database update --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
+```
+
+5. Запустите сборку и подъём образа:
 
 ```shell
 docker-compose up -d
