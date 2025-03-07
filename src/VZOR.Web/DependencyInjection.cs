@@ -15,7 +15,7 @@ public static class DependencyInjection
     {
         services
             .AddAccountsManagementModule(configuration)
-            .AddVisitorsModule(configuration)
+            .AddImagesModule(configuration)
             .AddFramework();
         
         return services;
@@ -41,13 +41,13 @@ public static class DependencyInjection
         return services;
     }
     
-    private static IServiceCollection AddVisitorsModule(
+    private static IServiceCollection AddImagesModule(
         this IServiceCollection services,
         IConfiguration configuration)
     {
         services
-            .AddVisitorsInfrastructure(configuration)
-            .AddVisitorsApplication();
+            .AddImagesInfrastructure(configuration)
+            .AddImagesApplication();
         
         return services;
     }

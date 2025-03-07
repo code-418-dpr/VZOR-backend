@@ -14,7 +14,7 @@ namespace VZOR.Images.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddVisitorsInfrastructure(
+    public static IServiceCollection AddImagesInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
     {
         services

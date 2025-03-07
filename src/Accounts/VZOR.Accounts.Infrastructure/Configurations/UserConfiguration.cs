@@ -17,5 +17,8 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
             .HasDefaultValue(true)
             .IsRequired()
             .HasColumnName("is_active");
+
+        builder.Navigation(u => u.ParticipantAccount)
+            .AutoInclude();
     }
 }

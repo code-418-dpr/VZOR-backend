@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using VZOR.Accounts.Application.Features.Commands.ChangeUserData;
 using VZOR.Accounts.Application.Features.Commands.DeleteRefreshSession;
 using VZOR.Accounts.Application.Features.Commands.Login;
 using VZOR.Accounts.Application.Features.Commands.Refresh;
@@ -8,6 +9,7 @@ using VZOR.Accounts.Application.Features.Commands.Register;
 using VZOR.Accounts.Contracts.Requests;
 using VZOR.Framework;
 using VZOR.Framework.Authorization;
+using VZOR.Framework.Models;
 
 namespace VZOR.Accounts.Controllers;
 
@@ -65,6 +67,27 @@ public class AccountController: ApplicationController
             return result.Errors.ToResponse();
 
         return Ok(result.Value);
+    }
+    
+    [Permission("read")]
+    [HttpPost("updating")]
+    public async Task<IActionResult> UpdateUserData(
+        [FromForm] ChangeUserDataRequest request,
+        [FromServices] UserScopedData userScopedData,
+        [FromServices] ChangeUserDataHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new ChangeUserDataCommand(
+            userScopedData.UserId,
+            request.Name, 
+            request.CurrentPassword,
+            request.NewPassword);
+
+        var result = await handler.Handle(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Errors.ToResponse();
+
+        return Ok(result);
     }
     
     [HttpPost("deletion")]

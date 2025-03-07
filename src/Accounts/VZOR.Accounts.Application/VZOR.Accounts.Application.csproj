@@ -12,8 +12,4 @@
       <ProjectReference Include="..\VZOR.Accounts.Domain\VZOR.Accounts.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\Commands\" />
-    </ItemGroup>
-
 </Project>

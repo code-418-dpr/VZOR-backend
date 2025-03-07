@@ -6,7 +6,7 @@ namespace VZOR.Images.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddVisitorsApplication(this IServiceCollection services)
+    public static IServiceCollection AddImagesApplication(this IServiceCollection services)
     {
         services
             .AddCommands()

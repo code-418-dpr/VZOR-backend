@@ -27,7 +27,7 @@ if (app.Environment.IsDevelopment())
 
 var accountsSeeder = app.Services.GetRequiredService<AccountsSeeder>();
 
-await accountsSeeder.SeedAsync();
+//await accountsSeeder.SeedAsync();
 
 app.UseExceptionMiddleware();
 
