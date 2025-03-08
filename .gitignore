@@ -6,6 +6,13 @@
 # dotenv files
 .env
 
+# Redis dump file
+/redis/dump.rdb
+
+# Entity Framework Core migrations
+**/Migrations/
+
+
 # User-specific files
 *.rsuser
 *.suo
