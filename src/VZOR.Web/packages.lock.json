@@ -1116,20 +1116,20 @@
       },
       "Npgsql": {
         "type": "Transitive",
-        "resolved": "9.0.2",
-        "contentHash": "hCbO8box7i/XXiTFqCJ3GoowyLqx3JXxyrbOJ6om7dr+eAknvBNhhUHeJVGAQo44sySZTfdVffp4BrtPeLZOAA==",
+        "resolved": "9.0.3",
+        "contentHash": "tPvY61CxOAWxNsKLEBg+oR646X4Bc8UmyQ/tJszL/7mEmIXQnnBhVJZrZEEUv0Bstu0mEsHZD5At3EO8zQRAYw==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "8.0.2"
         }
       },
       "Npgsql.EntityFrameworkCore.PostgreSQL": {
         "type": "Transitive",
-        "resolved": "9.0.3",
-        "contentHash": "1A6HpMPbzK+quxdtug1aDHI4BSRTgpi7OaDt8WQh7SFJd2sSQ0nNTZ7sYrwyxVf4AdKdN7XJL9tpiiJjRUaa4g==",
+        "resolved": "9.0.4",
+        "contentHash": "mw5vcY2IEc7L+IeGrxpp/J5OSnCcjkjAgJYCm/eD52wpZze8zsSifdqV7zXslSMmfJG2iIUGZyo3KuDtEFKwMQ==",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "[9.0.1, 10.0.0)",
           "Microsoft.EntityFrameworkCore.Relational": "[9.0.1, 10.0.0)",
-          "Npgsql": "9.0.2"
+          "Npgsql": "9.0.3"
         }
       },
       "NUglify": {
@@ -2597,7 +2597,7 @@
           "Extensions.Hosting.AsyncInitialization": "[3.0.1, )",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[9.0.2, )",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "[9.0.2, )",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "[9.0.3, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[9.0.4, )",
           "VZOR.Accounts.Application": "[1.0.0, )",
           "VZOR.Framework": "[1.0.0, )"
         }
@@ -2608,7 +2608,7 @@
           "FluentValidation": "[11.11.0, )",
           "FluentValidation.AspNetCore": "[11.3.0, )",
           "Microsoft.EntityFrameworkCore": "[9.0.2, )",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "[9.0.3, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[9.0.4, )",
           "Scrutor": "[6.0.1, )",
           "VZOR.SharedKernel": "[1.0.0, )"
         }
@@ -2626,18 +2626,6 @@
         "dependencies": {
           "VZOR.Core": "[1.0.0, )",
           "VZOR.Images.Domain": "[1.0.0, )"
-        }
-      },
-      "vzor.images.contracts": {
-        "type": "Project"
-      },
-      "vzor.images.controllers": {
-        "type": "Project",
-        "dependencies": {
-          "VZOR.Core": "[1.0.0, )",
-          "VZOR.Framework": "[1.0.0, )",
-          "VZOR.Images.Application": "[1.0.0, )",
-          "VZOR.Images.Contracts": "[1.0.0, )"
         }
       },
       "vzor.images.domain": {
