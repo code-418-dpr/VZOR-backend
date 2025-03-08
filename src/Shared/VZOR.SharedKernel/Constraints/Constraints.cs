@@ -21,6 +21,6 @@ public static partial class Constraints
     public enum Contexts
     {
         AuthContext,
-        VisitorsContext
+        ImagesContext
     }
 }

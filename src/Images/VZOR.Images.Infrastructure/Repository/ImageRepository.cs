@@ -7,16 +7,16 @@ using VZOR.SharedKernel.Errors;
 
 namespace VZOR.Images.Infrastructure.Repository;
 
-public class VisitorRepository(ApplicationDbContext context): IVisitorRepository
+public class ImageRepository(ApplicationDbContext context): IImageRepository
 {
-    public async Task AddAsync(Visitor visitor, CancellationToken cancellationToken = default)
+    public async Task AddRangeAsync(IEnumerable<Image> images, CancellationToken cancellationToken = default)
     {
-        await context.AddAsync(visitor, cancellationToken);
+        await context.AddRangeAsync(images, cancellationToken);
     }
 
-    public async Task<Visitor?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Image?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var visitor = await context.Visitors.FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
+        var visitor = await context.Images.FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
         
         return visitor;
     }
@@ -27,7 +27,7 @@ public class VisitorRepository(ApplicationDbContext context): IVisitorRepository
         if (visitor is null)
             return Errors.General.NotFound(id);
 
-        context.Visitors.Remove(visitor);
+        context.Images.Remove(visitor);
         return Result.Success();
     }
 }

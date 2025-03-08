@@ -28,15 +28,15 @@ public static class DependencyInjection
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IVisitorRepository, VisitorRepository>();
+        services.AddScoped<IImageRepository, ImageRepository>();
 
         return services;
     }
     
     private static IServiceCollection AddDatabase(this IServiceCollection services)
     {
-        services.AddKeyedScoped<IUnitOfWork, UnitOfWork>(Constraints.Contexts.VisitorsContext);
-        services.AddKeyedScoped<ISqlConnectionFactory, SqlConnectionFactory>(Constraints.Contexts.VisitorsContext);
+        services.AddKeyedScoped<IUnitOfWork, UnitOfWork>(Constraints.Contexts.ImagesContext);
+        services.AddKeyedScoped<ISqlConnectionFactory, SqlConnectionFactory>(Constraints.Contexts.ImagesContext);
 
         return services;
     }

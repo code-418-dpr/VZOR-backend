@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.ApiEndpoints;
@@ -27,24 +28,34 @@ public class MinioProvider: IFileProvider
         IEnumerable<FileData> filesData,
         CancellationToken cancellationToken = default)
     {
-        var semaphoreSlim = new SemaphoreSlim(MAX_DEGREE_OF_PARALLELISM);
         var filesList = filesData.ToList();
 
         try
         {
             await IsBucketExist(filesList.Select(f => f.FileInfo.BucketName), cancellationToken);
 
-            var tasks = filesList.Select(async file =>
-                await PutObject(file, semaphoreSlim, cancellationToken));
+            var results = new ConcurrentBag<string>();
+            var errors = new ConcurrentBag<ErrorList>();
 
-            var pathsResult = await Task.WhenAll(tasks);
+            await Parallel.ForEachAsync(filesList, new ParallelOptions
+                {
+                    MaxDegreeOfParallelism = MAX_DEGREE_OF_PARALLELISM,
+                    CancellationToken = cancellationToken
+                },
+                async (file, ct) =>
+                {
+                    var result = await PutObject(file, ct);
+                    if (result.IsFailure)
+                        errors.Add(result.Errors);
+                    else
+                        results.Add(result.Value);
+                });
+            
 
-            if (pathsResult.Any(p => p.IsFailure))
-                return pathsResult.First().Errors;
+            if (errors.Any())
+                return Error.Failure("file.upload", $"Failed to upload {errors.Count} files");
 
-            var results = pathsResult.Select(p => p.Value).ToList();
-
-            return results;
+            return results.ToList();
         }
         catch (Exception ex)
         {
@@ -159,11 +170,8 @@ public class MinioProvider: IFileProvider
 
     private async Task<Result<string>> PutObject(
         FileData fileData,
-        SemaphoreSlim semaphoreSlim,
         CancellationToken cancellationToken)
     {
-        await semaphoreSlim.WaitAsync(cancellationToken);
-
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(fileData.FileInfo.BucketName)
             .WithStreamData(fileData.Stream)
@@ -185,10 +193,6 @@ public class MinioProvider: IFileProvider
                 fileData.FileInfo.BucketName);
 
             return Error.Failure("file.upload", "Fail to upload file in minio");
-        }
-        finally
-        {
-            semaphoreSlim.Release();
         }
     }
     

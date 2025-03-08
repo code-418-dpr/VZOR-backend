@@ -36,6 +36,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Accounts\VZOR.Accounts.Controllers\VZOR.Accounts.Controllers.csproj" />
       <ProjectReference Include="..\Images\VZOR.Images.Application\VZOR.Images.Application.csproj" />
+      <ProjectReference Include="..\Images\VZOR.Images.Controllers\VZOR.Images.Controllers.csproj" />
       <ProjectReference Include="..\Images\VZOR.Images.Infrastructure\VZOR.Images.Infrastructure.csproj" />
       <ProjectReference Include="..\Shared\VZOR.Framework\VZOR.Framework.csproj" />
       <ProjectReference Include="..\Visitors\VZOR.Images.Application\VZOR.Images.Application.csproj" />

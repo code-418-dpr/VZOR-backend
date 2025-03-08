@@ -19,7 +19,7 @@ public class ApplicationDbContext(IConfiguration configuration): DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("visitors");
+        modelBuilder.HasDefaultSchema("images");
         
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
@@ -27,5 +27,5 @@ public class ApplicationDbContext(IConfiguration configuration): DbContext
     private static readonly ILoggerFactory CreateLoggerFactory
         = LoggerFactory.Create(builder => { builder.AddConsole(); });
     
-    public DbSet<Visitor> Visitors { get; set; } = null!;
+    public DbSet<Image> Images { get; set; } = null!;
 }
