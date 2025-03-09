@@ -1,4 +1,6 @@
-﻿using VZOR.Accounts.Application;
+﻿using Hangfire;
+using Hangfire.PostgreSql;
+using VZOR.Accounts.Application;
 using VZOR.Accounts.Infrastructure;
 using VZOR.Framework.Models;
 using VZOR.Images.Application;
@@ -16,11 +18,26 @@ public static class DependencyInjection
         services
             .AddAccountsManagementModule(configuration)
             .AddImagesModule(configuration)
-            .AddFramework();
+            .AddFramework()
+            .AddHangfire(configuration);
         
         return services;
     }
-    
+
+    private static IServiceCollection AddHangfire(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHangfire(options =>
+        {
+            options.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UsePostgreSqlStorage(
+                    c =>
+                        c.UseNpgsqlConnection(configuration.GetConnectionString("DefaultConnection")));
+        });
+        
+        return services;
+    }
     
     private static IServiceCollection AddFramework(this IServiceCollection services)
     {

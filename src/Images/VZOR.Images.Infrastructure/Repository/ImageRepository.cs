@@ -16,18 +16,25 @@ public class ImageRepository(ApplicationDbContext context): IImageRepository
 
     public async Task<Image?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var visitor = await context.Images.FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
+        var image = await context.Images.FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
         
-        return visitor;
+        return image;
     }
 
-    public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<List<Image>> GetByIdsAsync(IEnumerable<Guid> ids,CancellationToken cancellationToken = default)
     {
-        var visitor = await GetByIdAsync(id, cancellationToken);
-        if (visitor is null)
-            return Errors.General.NotFound(id);
+        var images = await context.Images.Where(v => ids.Contains(v.Id)).ToListAsync(cancellationToken);
+        
+        return images;
+    }
 
-        context.Images.Remove(visitor);
+    public async Task<Result> DeleteAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    {
+        var images = await GetByIdsAsync(ids, cancellationToken);
+        if (!images.Any())
+            return Errors.General.NotFound();
+
+        context.Images.RemoveRange(images);
         return Result.Success();
     }
 }

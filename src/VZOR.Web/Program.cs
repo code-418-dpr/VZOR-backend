@@ -1,3 +1,4 @@
+using Hangfire;
 using VZOR.Accounts.Infrastructure.Seeding;
 using VZOR.Framework.Middlewares;
 using VZOR.Web;
@@ -21,12 +22,15 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseHangfireDashboard();
 
 app.UseExceptionMiddleware();
 
 app.UseAuthentication();
 app.UseScopeDataMiddleware();
 app.UseAuthorization();
+
+app.UseHangfireServer();
 
 app.MapControllers();
 

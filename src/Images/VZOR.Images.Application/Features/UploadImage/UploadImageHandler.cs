@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
@@ -6,6 +7,7 @@ using VZOR.Core.Database;
 using VZOR.Core.Extension;
 using VZOR.Images.Application.FileProvider;
 using VZOR.Images.Application.FileProviders;
+using VZOR.Images.Application.Jobs;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Domain;
 using VZOR.SharedKernel;
@@ -85,6 +87,14 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
             transaction.Commit();
             
             _logger.LogInformation("Uploaded photos by user with user id {userId}", command.UserId);
+            
+            var ids = images.Select(x => x.Id).ToList();
+            var uploadLinks = images.Select(x => x.UploadLink).ToList();
+            
+            var jobId = BackgroundJob.Schedule<ConfirmConsistencyJob>(
+                j => j.Execute(
+                    ids,BUCKET_NAME, uploadLinks),
+                TimeSpan.FromMinutes(1));
             
             return Result.Success();
         }

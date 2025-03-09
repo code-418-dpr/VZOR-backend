@@ -7,5 +7,6 @@ public interface IImageRepository
 {
     Task AddRangeAsync(IEnumerable<Image> images, CancellationToken cancellationToken = default);
     Task<Image?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<Result>  DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Result>  DeleteAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
+    Task<List<Image>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
 }

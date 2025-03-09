@@ -67,7 +67,8 @@ public class MinioProvider: IFileProvider
     }
 
     
-    public async Task<Result<string>> DeleteFile(FileMetadata fileMetadata, CancellationToken cancellationToken)
+    public async Task<Result<string>> DeleteFile(
+        FileMetadata fileMetadata, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -144,7 +145,8 @@ public class MinioProvider: IFileProvider
         return paths;
     }
 
-    public async Task<Result<string>> GetFileByObjectName(FileMetadata fileMetadata, CancellationToken cancellationToken)
+    public async Task<Result<string>> GetFileByObjectName(
+        FileMetadata fileMetadata, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -170,7 +172,7 @@ public class MinioProvider: IFileProvider
 
     private async Task<Result<string>> PutObject(
         FileData fileData,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(fileData.FileInfo.BucketName)
@@ -196,7 +198,7 @@ public class MinioProvider: IFileProvider
         }
     }
     
-    private async Task IsBucketExist(IEnumerable<string> bucketNames,CancellationToken cancellationToken)
+    private async Task IsBucketExist(IEnumerable<string> bucketNames,CancellationToken cancellationToken = default)
     {
         HashSet<string> buckets = [..bucketNames];
 
