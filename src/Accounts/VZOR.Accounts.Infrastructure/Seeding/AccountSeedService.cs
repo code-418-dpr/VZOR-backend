@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using VZOR.Accounts.Domain;
@@ -63,7 +64,8 @@ public class AccountSeedService
 
         var adminUser = User.CreateAdmin(_adminOptions.UserName, _adminOptions.Email, adminRole);
 
-        var isAdminExist = await _userManager.FindByNameAsync(AdminProfile.ADMIN);
+        var isAdminExist =
+            await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == _adminOptions.UserName);
         if(isAdminExist is not null)
             return;
         

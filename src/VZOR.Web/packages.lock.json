@@ -2628,6 +2628,18 @@
           "VZOR.Images.Domain": "[1.0.0, )"
         }
       },
+      "vzor.images.contracts": {
+        "type": "Project"
+      },
+      "vzor.images.controllers": {
+        "type": "Project",
+        "dependencies": {
+          "VZOR.Core": "[1.0.0, )",
+          "VZOR.Framework": "[1.0.0, )",
+          "VZOR.Images.Application": "[1.0.0, )",
+          "VZOR.Images.Contracts": "[1.0.0, )"
+        }
+      },
       "vzor.images.domain": {
         "type": "Project",
         "dependencies": {
