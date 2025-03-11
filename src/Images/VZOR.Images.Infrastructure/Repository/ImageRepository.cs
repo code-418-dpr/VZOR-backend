@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Domain;
+using VZOR.Images.Infrastructure.Contexts;
 using VZOR.SharedKernel;
 using VZOR.SharedKernel.Errors;
 
 
 namespace VZOR.Images.Infrastructure.Repository;
 
-public class ImageRepository(ApplicationDbContext context): IImageRepository
+public class ImageRepository(WriteDbContext context): IImageRepository
 {
     public async Task AddRangeAsync(IEnumerable<Image> images, CancellationToken cancellationToken = default)
     {
@@ -36,5 +37,27 @@ public class ImageRepository(ApplicationDbContext context): IImageRepository
 
         context.Images.RemoveRange(images);
         return Result.Success();
+    }
+
+    public async Task<List<Image>> GetByUserIdWithPaginationAsync(
+        Guid userId, int page, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var images = await context.Images
+            .Where(v => v.UserId == userId)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+        
+        return images;
+    }
+    
+    public async Task<List<Image>> GetByUserIdAsync(
+        Guid userId, CancellationToken cancellationToken = default)
+    {
+        var images = await context.Images
+            .Where(v => v.UserId == userId)
+            .ToListAsync(cancellationToken);
+        
+        return images;
     }
 }

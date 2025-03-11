@@ -3,7 +3,7 @@ using VZOR.Core.Validators;
 using VZOR.SharedKernel.Constraints;
 using VZOR.SharedKernel.Errors;
 
-namespace VZOR.Images.Application.Features.UploadImage;
+namespace VZOR.Images.Application.Features.Commands.UploadImage;
 
 public class UploadImageValidator : AbstractValidator<UploadImageCommand>
 {

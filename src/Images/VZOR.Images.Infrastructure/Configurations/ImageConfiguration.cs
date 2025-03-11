@@ -8,6 +8,8 @@ public class ImageConfiguration: IEntityTypeConfiguration<Image>
 {
     public void Configure(EntityTypeBuilder<Image> builder)
     {
+        builder.ToTable("images");
+        
         builder.HasKey(i => i.Id);
         
         builder.Property(i => i.UserId)

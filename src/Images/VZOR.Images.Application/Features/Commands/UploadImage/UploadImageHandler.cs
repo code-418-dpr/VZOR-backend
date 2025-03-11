@@ -15,7 +15,7 @@ using VZOR.SharedKernel.Constraints;
 using VZOR.SharedKernel.Errors;
 using FileInfo = VZOR.Images.Application.FileProvider.FileInfo;
 
-namespace VZOR.Images.Application.Features.UploadImage;
+namespace VZOR.Images.Application.Features.Commands.UploadImage;
 
 public class UploadImageHandler: ICommandHandler<UploadImageCommand>
 {

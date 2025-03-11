@@ -1,9 +1,10 @@
 ﻿using Extensions.Hosting.AsyncInitialization;
 using Microsoft.EntityFrameworkCore;
+using VZOR.Images.Infrastructure.Contexts;
 
 namespace VZOR.Images.Infrastructure;
 
-public class DbInitializer(ApplicationDbContext dbContext) : IAsyncInitializer
+public class DbInitializer(WriteDbContext dbContext) : IAsyncInitializer
 {
     public async Task InitializeAsync(CancellationToken cancellationToken)
     {

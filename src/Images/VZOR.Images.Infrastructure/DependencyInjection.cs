@@ -3,8 +3,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using VZOR.Core.Database;
+using VZOR.Images.Application.Database;
 using VZOR.Images.Application.FileProviders;
 using VZOR.Images.Application.Repositories;
+using VZOR.Images.Infrastructure.Contexts;
 using VZOR.Images.Infrastructure.Options;
 using VZOR.Images.Infrastructure.Providers;
 using VZOR.Images.Infrastructure.Repository;
@@ -70,7 +72,8 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services)
     {
-        services.AddScoped<ApplicationDbContext>();
+        services.AddScoped<WriteDbContext>();
+        services.AddScoped<IReadDbContext, ReadDbContext>();
 
         services.AddAsyncInitializer<DbInitializer>();
         

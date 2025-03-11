@@ -4,5 +4,5 @@ namespace VZOR.Images.Application.Database;
 
 public interface IReadDbContext
 {
-    IQueryable<Image> Visitors { get; }
+    IQueryable<Image> Images { get; }
 }

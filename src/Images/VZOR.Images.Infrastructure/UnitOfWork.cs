@@ -1,14 +1,15 @@
 using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 using VZOR.Core.Database;
+using VZOR.Images.Infrastructure.Contexts;
 
 namespace VZOR.Images.Infrastructure;
 
 public class UnitOfWork: IUnitOfWork
 {
-    private readonly ApplicationDbContext _writeDbContext;
+    private readonly WriteDbContext _writeDbContext;
 
-    public UnitOfWork(ApplicationDbContext writeDbContext)
+    public UnitOfWork(WriteDbContext writeDbContext)
     {
         _writeDbContext = writeDbContext;
     }
