@@ -1,4 +1,5 @@
 using Hangfire;
+using VZOR.Accounts.Domain;
 using VZOR.Accounts.Infrastructure.Seeding;
 using VZOR.Framework.Middlewares;
 using VZOR.Web;
@@ -21,7 +22,10 @@ builder.Services.AddSwagger();
 var app = builder.Build();
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.OAuth2RedirectUrl("http://localhost:5238/api/Account/yandex-callback");
+});
 app.UseHangfireDashboard();
 
 app.UseExceptionMiddleware();

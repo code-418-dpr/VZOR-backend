@@ -41,6 +41,7 @@ public static class AddWebServices
                 Title = "My API",
                 Version = "v1"
             });
+            
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
@@ -62,7 +63,46 @@ public static class AddWebServices
                     []
                 }
             });
+            
+            c.AddSecurityDefinition("google", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
+                {
+                    AuthorizationCode = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = new Uri("https://accounts.google.com/o/oauth2/v2/auth"),
+                        TokenUrl = new Uri("https://www.googleapis.com/oauth2/v4/token"),
+                        Scopes = new Dictionary<string, string>
+                        {
+                            { "openid", "OpenID Connect" },
+                            { "profile", "Profile" },
+                            { "email", "Email" }
+                        }
+                    }
+                }
+            });
+            
+            c.AddSecurityDefinition("yandex", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
+                {
+                    AuthorizationCode = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = new Uri("https://oauth.yandex.ru/authorize"),
+                        TokenUrl = new Uri("https://oauth.yandex.ru/token"),
+                        
+                        Scopes = new Dictionary<string, string>
+                        {
+                            { "login:email", "Email" },
+                            { "login:info", "Profile" }
+                        },
+                    }
+                }
+            });
         });
+
         
         return services;
     }

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AspNet.Security.OAuth.Yandex;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -107,13 +110,21 @@ public static class DependencyInjection
         services.Configure<RefreshSessionOptions>(
             configuration.GetSection(RefreshSessionOptions.REFRESH_SESSION));
         
+        services.AddDistributedMemoryCache();
+        
         services
             .AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Используем куки для входа
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Используем JWT для аутентификации API
+                options.DefaultChallengeScheme = YandexAuthenticationDefaults.AuthenticationScheme; // Используем Яндекс для вызова Challenge
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Используем куки как схему по умолчанию
+            })
+            .AddCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                options.Cookie.HttpOnly = true;
             })
             .AddJwtBearer(options =>
             {
@@ -122,6 +133,18 @@ public static class DependencyInjection
 
                 options.TokenValidationParameters =
                     TokenValidationParametersFactory.CreateWithLifeTime(jwtOptions);
+            })
+            .AddGoogle(options =>
+            {
+                options.ClientId = "927041417066-jldvkaksnrkr6oi1kd504amppsr0bv8v.apps.googleusercontent.com";
+                options.ClientSecret = "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";
+            })
+            .AddYandex(options =>
+            {
+                options.ClientId = "7b6960e71e8a4a78acff0880aaf0d373"; 
+                options.ClientSecret = "82ea36e876104a7f9f2199c04933d248"; 
+                options.CallbackPath = new PathString("/api/Account/yandex-callback"); 
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
 
         return services;
