@@ -694,6 +694,17 @@
           "Microsoft.Extensions.Primitives": "9.0.2"
         }
       },
+      "Microsoft.Extensions.Caching.Hybrid": {
+        "type": "Transitive",
+        "resolved": "9.2.0-preview.1.25105.6",
+        "contentHash": "3HcyuxDvVQgy5V7SJx4IorRWeo8pSgCe3JfVF+2tseDhmRLYi3gm6lKHm+7+peXzTNABnahsM9uhCE6NlQ6OOA==",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "9.0.2",
+          "Microsoft.Extensions.Caching.Memory": "9.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.2",
+          "Microsoft.Extensions.Options": "9.0.2"
+        }
+      },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Transitive",
         "resolved": "9.0.2",
@@ -704,6 +715,17 @@
           "Microsoft.Extensions.Logging.Abstractions": "9.0.2",
           "Microsoft.Extensions.Options": "9.0.2",
           "Microsoft.Extensions.Primitives": "9.0.2"
+        }
+      },
+      "Microsoft.Extensions.Caching.StackExchangeRedis": {
+        "type": "Transitive",
+        "resolved": "9.0.2",
+        "contentHash": "DVIRRhNlSPOcOh01ZjtByHk4PxgQnMEBn+Sy9Nr29Z1NLw0OR7egXqHA/jSGDGs2HOwONhDlTKl7OGZl6wDWsg==",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "9.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.2",
+          "Microsoft.Extensions.Options": "9.0.2",
+          "StackExchange.Redis": "2.7.27"
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
@@ -1022,6 +1044,14 @@
           "System.Xml.XDocument": "4.3.0"
         }
       },
+      "NetTopologySuite": {
+        "type": "Transitive",
+        "resolved": "2.5.0",
+        "contentHash": "5/+2O2ADomEdUn09mlSigACdqvAf0m/pVPGtIPEPQWnyrVykYY0NlfXLIdkMgi41kvH9kNrPqYaFBTZtHYH7Xw==",
+        "dependencies": {
+          "System.Memory": "4.5.4"
+        }
+      },
       "Newtonsoft.Json": {
         "type": "Transitive",
         "resolved": "13.0.3",
@@ -1045,12 +1075,29 @@
           "Npgsql": "9.0.3"
         }
       },
+      "NRedisStack": {
+        "type": "Transitive",
+        "resolved": "0.13.2",
+        "contentHash": "tgtzv5D3HrC9frmCzd/va5xJldMhw3mZ4j56nQZGJOjnhfKjaR3dNHT04l9PSrMJZkHu4laKcvNMki9q28wAAA==",
+        "dependencies": {
+          "NetTopologySuite": "2.5.0",
+          "StackExchange.Redis": "2.8.16"
+        }
+      },
       "OpenTelemetry.Api": {
         "type": "Transitive",
         "resolved": "1.11.1",
         "contentHash": "KaBjGMqrqQv41mIkvPUvmAG7yxDlI6qchKhjXlOF3ZwsdcRRLrdrkiDLIJ90iZgUoKVdP8fE1fCri9nc+ug0Cg==",
         "dependencies": {
           "System.Diagnostics.DiagnosticSource": "9.0.0"
+        }
+      },
+      "Pipelines.Sockets.Unofficial": {
+        "type": "Transitive",
+        "resolved": "2.2.8",
+        "contentHash": "zG2FApP5zxSx6OcdJQLbZDk2AVlN2BNQD6MorwIfV6gVj0RRxWPEp2LXAxqDGZqeNV1Zp0BNPcNaey/GXmTdvQ==",
+        "dependencies": {
+          "System.IO.Pipelines": "5.0.1"
         }
       },
       "RabbitMQ.Client": {
@@ -1256,6 +1303,32 @@
           "System.Private.Uri": "4.3.2",
           "System.Runtime": "4.3.0",
           "System.Text.RegularExpressions": "4.3.0"
+        }
+      },
+      "StackExchange.Redis": {
+        "type": "Transitive",
+        "resolved": "2.8.24",
+        "contentHash": "GWllmsFAtLyhm4C47cOCipGxyEi1NQWTFUHXnJ8hiHOsK/bH3T5eLkWPVW+LRL6jDiB3g3izW3YEHgLuPoJSyA==",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
+          "Pipelines.Sockets.Unofficial": "2.2.8"
+        }
+      },
+      "StackExchange.Redis.Extensions.Core": {
+        "type": "Transitive",
+        "resolved": "11.0.0",
+        "contentHash": "KGH7IDglQyyIU135xq9K9Ng193VDoSSRsLVE4AsbscyGEsRAbs8xU6cJLuelenfPpjea7oQPMNSg7peXDwPdBw==",
+        "dependencies": {
+          "StackExchange.Redis": "[2.8.24, 3.0.0)"
+        }
+      },
+      "StackExchange.Redis.Extensions.Newtonsoft": {
+        "type": "Transitive",
+        "resolved": "11.0.0",
+        "contentHash": "0RhAkuiOnOzRASRdVvRTR0/H0i8HWG3rK5WlMhHO3icXIWFZQ9Su3xIEDwKQfVZJ2CEKZCVV1uuUgS5/d3d5CQ==",
+        "dependencies": {
+          "Newtonsoft.Json": "[13.0.3, 14.0.0)",
+          "StackExchange.Redis.Extensions.Core": "11.0.0"
         }
       },
       "Swashbuckle.AspNetCore.Swagger": {
@@ -1585,6 +1658,11 @@
           "System.Runtime.Extensions": "4.3.0",
           "System.Threading": "4.3.0"
         }
+      },
+      "System.Memory": {
+        "type": "Transitive",
+        "resolved": "4.5.4",
+        "contentHash": "1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw=="
       },
       "System.Net.Http": {
         "type": "Transitive",
@@ -2161,7 +2239,6 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[9.0.2, )",
           "Microsoft.AspNetCore.Authentication.OAuth": "[2.3.0, )",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "[9.0.2, )",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "[9.0.4, )",
           "VZOR.Accounts.Application": "[1.0.0, )",
           "VZOR.Framework": "[1.0.0, )"
         }
@@ -2219,8 +2296,15 @@
         "dependencies": {
           "EFCore.NamingConventions": "[9.0.0, )",
           "Extensions.Hosting.AsyncInitialization": "[3.0.1, )",
+          "Microsoft.Extensions.Caching.Abstractions": "[9.0.2, )",
+          "Microsoft.Extensions.Caching.Hybrid": "[9.2.0-preview.1.25105.6, )",
+          "Microsoft.Extensions.Caching.StackExchangeRedis": "[9.0.2, )",
           "Minio": "[6.0.4, )",
+          "NRedisStack": "[0.13.2, )",
           "Newtonsoft.Json": "[13.0.3, )",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "[9.0.4, )",
+          "StackExchange.Redis.Extensions.Core": "[11.0.0, )",
+          "StackExchange.Redis.Extensions.Newtonsoft": "[11.0.0, )",
           "VZOR.Images.Application": "[1.0.0, )"
         }
       },

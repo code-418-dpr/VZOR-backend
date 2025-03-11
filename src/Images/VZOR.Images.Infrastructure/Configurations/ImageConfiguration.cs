@@ -24,6 +24,7 @@ public class ImageConfiguration: IEntityTypeConfiguration<Image>
 
         builder.Property(i => i.ProcessingResult)
             .HasColumnName("processing_result")
+            .HasColumnType("jsonb")
             .IsRequired(false);
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VZOR.Accounts.Application;
@@ -96,7 +97,7 @@ public static class DependencyInjection
         
         return services;
     }
-
+    
     private static IServiceCollection AddJwtAuthentication(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -115,10 +116,10 @@ public static class DependencyInjection
         services
             .AddAuthentication(options =>
             {
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Используем куки для входа
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Используем JWT для аутентификации API
-                options.DefaultChallengeScheme = YandexAuthenticationDefaults.AuthenticationScheme; // Используем Яндекс для вызова Challenge
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Используем куки как схему по умолчанию
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme; 
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; 
             })
             .AddCookie(options =>
             {
@@ -133,9 +134,6 @@ public static class DependencyInjection
 
                 options.TokenValidationParameters =
                     TokenValidationParametersFactory.CreateWithLifeTime(jwtOptions);
-            })
-            .AddGoogle(options =>
-            {
             })
             .AddYandex(options =>
             {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Caching.Hybrid;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using VZOR.Core.Database;
@@ -21,11 +22,37 @@ public static class DependencyInjection
             .AddMinio(configuration)
             .AddDatabase()
             .AddDbContexts()
-            .AddRepositories();
+            .AddRepositories()
+            .AddRedis(configuration);
         
         return services;
     }
 
+    private static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Redis");
+            options.InstanceName = configuration["Redis:InstanceName"];
+        });
+        
+        
+        #pragma warning disable EXTEXP0018
+        services.AddHybridCache(options =>
+        {
+            options.MaximumPayloadBytes = 1024 * 1024 * 10;     
+            options.MaximumKeyLength = 512;
+         
+            options.DefaultEntryOptions = new HybridCacheEntryOptions
+            {
+                Expiration = TimeSpan.FromMinutes(3),
+                LocalCacheExpiration = TimeSpan.FromMinutes(3)
+            };
+        });
+    #pragma warning restore EXTEXP0018
+        return services;
+    }
+    
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IImageRepository, ImageRepository>();
