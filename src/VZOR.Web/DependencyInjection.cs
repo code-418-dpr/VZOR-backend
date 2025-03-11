@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using Hangfire.PostgreSql;
+using MassTransit;
 using VZOR.Accounts.Application;
 using VZOR.Accounts.Infrastructure;
 using VZOR.Framework.Models;
@@ -19,7 +20,8 @@ public static class DependencyInjection
             .AddAccountsManagementModule(configuration)
             .AddImagesModule(configuration)
             .AddFramework()
-            .AddHangfire(configuration);
+            .AddHangfire(configuration)
+            .AddMessageBus(configuration);
         
         return services;
     }
@@ -54,6 +56,31 @@ public static class DependencyInjection
         services
             .AddAccountsApplication()
             .AddAccountsInfrastructure(configuration);
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddMessageBus(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddMassTransit(configure =>
+        {
+            configure.SetKebabCaseEndpointNameFormatter();
+            
+            configure.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(new Uri(configuration["RabbitMQ:Host"]!), h =>
+                {
+                    h.Username(configuration["RabbitMQ:UserName"]!);
+                    h.Password(configuration["RabbitMQ:Password"]!);
+                });
+
+                cfg.Durable = true;
+                
+                cfg.ConfigureEndpoints(context);
+            });
+        });
         
         return services;
     }

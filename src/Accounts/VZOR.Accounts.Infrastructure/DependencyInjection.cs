@@ -134,10 +134,13 @@ public static class DependencyInjection
                 options.TokenValidationParameters =
                     TokenValidationParametersFactory.CreateWithLifeTime(jwtOptions);
             })
+            .AddGoogle(options =>
+            {
+            })
             .AddYandex(options =>
             {
-                options.ClientId = "your client id"; 
-                options.ClientSecret = "your client secret"; 
+                options.ClientId = "7b6960e71e8a4a78acff0880aaf0d373"; 
+                options.ClientSecret = "82ea36e876104a7f9f2199c04933d248"; 
                 options.CallbackPath = new PathString("/api/Account/yandex-callback"); 
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
