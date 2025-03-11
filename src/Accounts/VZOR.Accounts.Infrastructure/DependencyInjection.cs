@@ -136,13 +136,11 @@ public static class DependencyInjection
             })
             .AddGoogle(options =>
             {
-                options.ClientId = "927041417066-jldvkaksnrkr6oi1kd504amppsr0bv8v.apps.googleusercontent.com";
-                options.ClientSecret = "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";
             })
             .AddYandex(options =>
             {
-                options.ClientId = "7b6960e71e8a4a78acff0880aaf0d373"; 
-                options.ClientSecret = "82ea36e876104a7f9f2199c04933d248"; 
+                options.ClientId = "your client id"; 
+                options.ClientSecret = "your client secret"; 
                 options.CallbackPath = new PathString("/api/Account/yandex-callback"); 
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
