@@ -139,8 +139,7 @@ public static class DependencyInjection
             })
             .AddYandex(options =>
             {
-                options.ClientId = "your client id"; 
-                options.ClientSecret = "your client secret"; 
+                
                 options.CallbackPath = new PathString("/api/Account/yandex-callback"); 
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
