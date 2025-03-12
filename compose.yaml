@@ -52,6 +52,16 @@
       - "6380:6379"
     volumes:
       - ./redisdata:/data
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "mongoadmin"
+      MONGO_INITDB_ROOT_PASSWORD: "mongopassword"
+      MONGO_INITDB_DATABASE: "vzor"
+    ports:
+      - "27017:27017"
   rabbitmq:
     image: rabbitmq:management-alpine
     container_name: rabbitmq

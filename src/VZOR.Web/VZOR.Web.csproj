@@ -8,14 +8,14 @@
         <UserSecretsId>fca2d638-681c-4790-bd1d-09710bbc903d</UserSecretsId>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.64.0"/>
         <PackageReference Include="DotNetEnv" Version="3.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Process" Version="1.11.0-beta.1" />
@@ -28,11 +28,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Accounts\VZOR.Accounts.Controllers\VZOR.Accounts.Controllers.csproj" />
-      <ProjectReference Include="..\Images\VZOR.Images.Application\VZOR.Images.Application.csproj" />
-      <ProjectReference Include="..\Images\VZOR.Images.Controllers\VZOR.Images.Controllers.csproj" />
-      <ProjectReference Include="..\Images\VZOR.Images.Infrastructure\VZOR.Images.Infrastructure.csproj" />
-      <ProjectReference Include="..\Shared\VZOR.Framework\VZOR.Framework.csproj" />
+        <ProjectReference Include="..\Accounts\VZOR.Accounts.Controllers\VZOR.Accounts.Controllers.csproj" />
+        <ProjectReference Include="..\Images\VZOR.Images.Application\VZOR.Images.Application.csproj" />
+        <ProjectReference Include="..\Images\VZOR.Images.Controllers\VZOR.Images.Controllers.csproj" />
+        <ProjectReference Include="..\Images\VZOR.Images.Infrastructure\VZOR.Images.Infrastructure.csproj" />
+        <ProjectReference Include="..\Shared\VZOR.Framework\VZOR.Framework.csproj" />
     </ItemGroup>
 
     <ItemGroup>

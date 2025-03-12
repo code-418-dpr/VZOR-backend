@@ -23,4 +23,10 @@ public static partial class Constraints
         AuthContext,
         ImagesContext
     }
+
+    public enum Database
+    {
+        Mongo,
+        Postgres,
+    }
 }

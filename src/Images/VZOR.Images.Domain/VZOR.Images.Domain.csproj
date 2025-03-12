@@ -10,4 +10,8 @@
       <ProjectReference Include="..\..\Shared\VZOR.SharedKernel\VZOR.SharedKernel.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MongoDB.Bson" Version="3.2.1" />
+    </ItemGroup>
+
 </Project>

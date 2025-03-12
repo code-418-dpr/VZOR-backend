@@ -31,7 +31,7 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
     public UploadImageHandler(
         ILogger<UploadImageHandler> logger,
         IValidator<UploadImageCommand> validator,
-        IImageRepository repository,
+        [FromKeyedServices(Constraints.Database.Mongo)]IImageRepository repository,
         [FromKeyedServices(Constraints.Contexts.ImagesContext)]IUnitOfWork unitOfWork,
         IFileProvider fileProvider, 
         IDateTimeProvider dateTimeProvider)
@@ -49,8 +49,6 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
         var validatorResult = await _validator.ValidateAsync(command, cancellationToken);
         if (!validatorResult.IsValid)
             return validatorResult.ToErrorList();
-        
-        var transaction = await _unitOfWork.BeginTransaction(cancellationToken);
 
         try
         {
@@ -69,8 +67,8 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
                 
                 images.Add(new Image
                 {
-                    Id = id,
-                    UserId = command.UserId,
+                    Id = id.ToString(),
+                    UserId = command.UserId.ToString(),
                     UploadLink = uploadLink,
                     UploadDate = _dateTimeProvider.UtcNow,
                 });
@@ -81,10 +79,6 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
             var paths = await _fileProvider.UploadFiles(filesData, cancellationToken);
             if (paths.IsFailure)
                 return paths.Errors;
-            
-            await _unitOfWork.SaveChanges(cancellationToken);
-            
-            transaction.Commit();
             
             _logger.LogInformation("Uploaded photos by user with user id {userId}", command.UserId);
             
@@ -100,8 +94,6 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
         }
         catch (Exception ex)
         {
-            transaction.Rollback();
-            
             _logger.LogError(ex, ex.Message);
 
             return Error.Failure("upload.photos.error", "Cannot upload photos");

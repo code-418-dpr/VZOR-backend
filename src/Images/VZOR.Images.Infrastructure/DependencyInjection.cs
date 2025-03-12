@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Minio;
+using MongoDB.Driver;
 using VZOR.Core.Database;
 using VZOR.Images.Application.Database;
 using VZOR.Images.Application.FileProviders;
@@ -11,6 +13,7 @@ using VZOR.Images.Infrastructure.Options;
 using VZOR.Images.Infrastructure.Providers;
 using VZOR.Images.Infrastructure.Repository;
 using VZOR.SharedKernel.Constraints;
+using MongoDatabaseSettings = VZOR.Images.Infrastructure.Options.MongoDatabaseSettings;
 
 
 namespace VZOR.Images.Infrastructure;
@@ -25,7 +28,8 @@ public static class DependencyInjection
             .AddDatabase()
             .AddDbContexts()
             .AddRepositories()
-            .AddRedis(configuration);
+            .AddRedis(configuration)
+            .AddMongo(configuration);
         
         return services;
     }
@@ -57,8 +61,9 @@ public static class DependencyInjection
     
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IImageRepository, ImageRepository>();
-
+        services.AddKeyedScoped<IImageRepository, ImageRepository>(Constraints.Database.Postgres);
+        services.AddKeyedScoped<IImageRepository, ImageMongoRepository>(Constraints.Database.Mongo);
+        
         return services;
     }
     
@@ -66,6 +71,27 @@ public static class DependencyInjection
     {
         services.AddKeyedScoped<IUnitOfWork, UnitOfWork>(Constraints.Contexts.ImagesContext);
         services.AddKeyedScoped<ISqlConnectionFactory, SqlConnectionFactory>(Constraints.Contexts.ImagesContext);
+
+        return services;
+    }
+
+    private static IServiceCollection AddMongo(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<MongoDatabaseSettings>(
+            configuration.GetSection(MongoDatabaseSettings.Mongo) ?? throw new ApplicationException());
+        
+        services.AddSingleton<IMongoClient>(serviceProvider =>
+        {
+            var settings = serviceProvider.GetRequiredService<IOptions<MongoDatabaseSettings>>().Value;
+            return new MongoClient(settings.ConnectionString);
+        });
+        
+        services.AddScoped<IMongoDatabase>(serviceProvider =>
+        {
+            var settings = serviceProvider.GetRequiredService<IOptions<MongoDatabaseSettings>>().Value;
+            var client = serviceProvider.GetRequiredService<IMongoClient>();
+            return client.GetDatabase(settings.DatabaseName);
+        });
 
         return services;
     }

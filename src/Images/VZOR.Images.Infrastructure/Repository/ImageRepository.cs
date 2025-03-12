@@ -15,21 +15,21 @@ public class ImageRepository(WriteDbContext context): IImageRepository
         await context.AddRangeAsync(images, cancellationToken);
     }
 
-    public async Task<Image?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Image?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         var image = await context.Images.FirstOrDefaultAsync(v => v.Id == id, cancellationToken);
         
         return image;
     }
 
-    public async Task<List<Image>> GetByIdsAsync(IEnumerable<Guid> ids,CancellationToken cancellationToken = default)
+    public async Task<List<Image>> GetByIdsAsync(IEnumerable<string> ids,CancellationToken cancellationToken = default)
     {
         var images = await context.Images.Where(v => ids.Contains(v.Id)).ToListAsync(cancellationToken);
         
         return images;
     }
 
-    public async Task<Result> DeleteAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    public async Task<Result> DeleteAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
     {
         var images = await GetByIdsAsync(ids, cancellationToken);
         if (!images.Any())
@@ -40,7 +40,7 @@ public class ImageRepository(WriteDbContext context): IImageRepository
     }
 
     public async Task<List<Image>> GetByUserIdWithPaginationAsync(
-        Guid userId, int page, int pageSize, CancellationToken cancellationToken = default)
+        string userId, int page, int pageSize, CancellationToken cancellationToken = default)
     {
         var images = await context.Images
             .Where(v => v.UserId == userId)
@@ -52,7 +52,7 @@ public class ImageRepository(WriteDbContext context): IImageRepository
     }
     
     public async Task<List<Image>> GetByUserIdAsync(
-        Guid userId, CancellationToken cancellationToken = default)
+        string userId, CancellationToken cancellationToken = default)
     {
         var images = await context.Images
             .Where(v => v.UserId == userId)

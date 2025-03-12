@@ -1,18 +1,20 @@
 ﻿using Hangfire;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Images.Application.FileProvider;
 using VZOR.Images.Application.FileProviders;
 using VZOR.Images.Application.Repositories;
+using VZOR.SharedKernel.Constraints;
 
 namespace VZOR.Images.Application.Jobs;
 
 public class ConfirmConsistencyJob(
-    IImageRepository repository,
+    [FromKeyedServices(Constraints.Database.Mongo)]IImageRepository repository,
     IFileProvider fileProvider,
     ILogger<ConfirmConsistencyJob> logger)
 {
     [AutomaticRetry(Attempts = 3, DelaysInSeconds = [5, 10, 15])]
-    public async Task Execute(IEnumerable<Guid> imageIds,string bucketName, IEnumerable<string> uploadUrls)
+    public async Task Execute(IEnumerable<string> imageIds,string bucketName, IEnumerable<string> uploadUrls)
     {
         try
         {

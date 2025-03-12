@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
 using VZOR.Core.Extension;
@@ -10,6 +11,7 @@ using VZOR.Images.Application.Database;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Domain;
 using VZOR.SharedKernel;
+using VZOR.SharedKernel.Constraints;
 
 namespace VZOR.Images.Application.Features.Queries.GetImagesQuery;
 
@@ -18,18 +20,18 @@ public class GetImagesHandler : IQueryHandler<PagedList<Image>, GetImagesQuery>
     private readonly ILogger<GetImagesHandler> _logger;
     private readonly IValidator<GetImagesQuery> _validator;
     private readonly HybridCache _hybridCache;
-    private readonly IReadDbContext _readDbContext;
+    private readonly IImageRepository _imageRepository;
 
     public GetImagesHandler(
         ILogger<GetImagesHandler> logger,
         IValidator<GetImagesQuery> validator,
         HybridCache hybridCache,
-        IReadDbContext readDbContext)
+        [FromKeyedServices(Constraints.Database.Mongo)]IImageRepository imageRepository)
     {
         _logger = logger;
         _validator = validator;
         _hybridCache = hybridCache;
-        _readDbContext = readDbContext;
+        _imageRepository = imageRepository;
     }
 
     public async Task<Result<PagedList<Image>>> Handle(
@@ -43,9 +45,8 @@ public class GetImagesHandler : IQueryHandler<PagedList<Image>, GetImagesQuery>
             $"images_{query.UserId}", 
             async _ =>
             {
-                var images = await _readDbContext.Images
-                    .Where(i => i.UserId == query.UserId)
-                    .ToListAsync(cancellationToken);
+                var images = await _imageRepository
+                    .GetByUserIdAsync(query.UserId.ToString(), cancellationToken);
                 
                 return images;
             },
@@ -64,7 +65,7 @@ public class GetImagesHandler : IQueryHandler<PagedList<Image>, GetImagesQuery>
             ? images.OrderByDescending(keySelector) 
             : images.OrderBy(keySelector);
         
-        var pagedList = images.ToList().ToPagedList(
+        var pagedList = images.ToPagedList(
             query.Page,
             query.PageSize);
         

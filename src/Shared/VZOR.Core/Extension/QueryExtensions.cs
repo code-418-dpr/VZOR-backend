@@ -29,7 +29,7 @@ public static class QueryExtensions
     }
     
     public static PagedList<T> ToPagedList<T>(
-        this IEnumerable<T> source,
+        this IQueryable<T> source,
         int page,
         int pageSize)
     {
@@ -56,4 +56,5 @@ public static class QueryExtensions
     {
         return condition ? source.Where(predicate) : source;
     }
+    
 }
