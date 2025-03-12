@@ -29,4 +29,8 @@
       <ProjectReference Include="..\VZOR.Accounts.Application\VZOR.Accounts.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Migrations\AccountsDbContextModelSnapshot.cs" />
+    </ItemGroup>
+
 </Project>

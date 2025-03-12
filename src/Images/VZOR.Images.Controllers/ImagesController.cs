@@ -5,6 +5,7 @@ using VZOR.Framework.Models;
 using VZOR.Framework.Processors;
 using VZOR.Images.Application.Features.Commands.DeleteImage;
 using VZOR.Images.Application.Features.Commands.UploadImage;
+using VZOR.Images.Application.Features.Queries.GetImageByIdQuery;
 using VZOR.Images.Application.Features.Queries.GetImagesQuery;
 using VZOR.Images.Controllers.Requests;
 
@@ -60,7 +61,7 @@ public class ImagesController: ApplicationController
         [FromServices] GetImagesHandler handler,
         CancellationToken cancellationToken = default)
     {
-        var command = new GetImagesQuery(
+        var query = new GetImagesQuery(
             userScopedData.UserId, 
             request.StartUploadDate,
             request.EndUploadDate,
@@ -69,7 +70,25 @@ public class ImagesController: ApplicationController
             request.Page,
             request.PageSize);
 
-        var result = await handler.Handle(command, cancellationToken);
+        var result = await handler.Handle(query, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Errors.ToResponse();
+        
+        return Ok(result);
+    }
+    
+    [Permission("read")]
+    [HttpGet("{imageId:guid}")]
+    public async Task<ActionResult> GetImageById(
+        [FromRoute] Guid imageId,
+        [FromServices] UserScopedData userScopedData,
+        [FromServices] GetImageByIdHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetImageByIdQuery(imageId);
+        
+        var result = await handler.Handle(query, cancellationToken);
 
         if (result.IsFailure)
             return result.Errors.ToResponse();

@@ -11,8 +11,4 @@
       <ProjectReference Include="..\VZOR.Images.Domain\VZOR.Images.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Features\Queries\GetImageByIdQuery\" />
-    </ItemGroup>
-
 </Project>
