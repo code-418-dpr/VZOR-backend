@@ -3,6 +3,7 @@ using VZOR.Framework;
 using VZOR.Framework.Authorization;
 using VZOR.Framework.Models;
 using VZOR.Framework.Processors;
+using VZOR.Images.Application.Features.Commands.DeleteImage;
 using VZOR.Images.Application.Features.Commands.UploadImage;
 using VZOR.Images.Application.Features.Queries.GetImagesQuery;
 using VZOR.Images.Controllers.Requests;
@@ -14,7 +15,7 @@ public class ImagesController: ApplicationController
     [Permission("update")]
     [HttpPost]
     public async Task<ActionResult> UploadImages(
-        [FromForm]UploadImagesRequest request,
+        [FromForm] UploadImagesRequest request,
         [FromServices] UserScopedData userScopedData,
         [FromServices] UploadImageHandler handler,
         CancellationToken cancellationToken = default)
@@ -24,6 +25,24 @@ public class ImagesController: ApplicationController
         var fileDtos = fileProcessor.Process(request.Files);
 
         var command = new UploadImageCommand(userScopedData.UserId, fileDtos);
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Errors.ToResponse();
+        
+        return Ok();
+    }
+    
+    [Permission("update")]
+    [HttpPost("removing")]
+    public async Task<ActionResult> DeleteImage(
+        [FromBody] Guid imageId,
+        [FromServices] UserScopedData userScopedData,
+        [FromServices] DeleteImageHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeleteImageCommand(userScopedData.UserId, imageId);
 
         var result = await handler.Handle(command, cancellationToken);
 

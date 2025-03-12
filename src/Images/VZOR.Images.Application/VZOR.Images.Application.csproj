@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Commands\DeleteImage\" />
       <Folder Include="Features\Queries\GetImageByIdQuery\" />
     </ItemGroup>
 

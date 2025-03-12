@@ -26,6 +26,7 @@ app.UseSwaggerUI(c =>
 {
     c.OAuth2RedirectUrl("http://localhost:5238/api/Account/yandex-callback");
 });
+
 app.UseHangfireDashboard();
 
 app.UseExceptionMiddleware();

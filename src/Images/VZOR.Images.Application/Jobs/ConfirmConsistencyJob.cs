@@ -36,7 +36,7 @@ public class ConfirmConsistencyJob(
 
             if (images.Count < imageIds.Count())
             {
-                logger.LogWarning("Some Postgres records not found for the given fileIds." +
+                logger.LogWarning("Some database records not found for the given fileIds." +
                                   " Deleting all files from cloud storage.");
                 
                 var deleteTasks = metaDatas.Select(m =>
@@ -54,8 +54,8 @@ public class ConfirmConsistencyJob(
                     where image == null || metadata != image.UploadLink 
                     select metadata).Any())
             {
-                logger.LogWarning("Metadata key does not match Postgres data." +
-                                  " Deleting file from cloud storage and Postgres record.");
+                logger.LogWarning("Metadata key does not match db data." +
+                                  " Deleting file from cloud storage and database record.");
                 
                 isConsistent = false;
             }
