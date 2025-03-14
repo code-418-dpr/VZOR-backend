@@ -53,7 +53,7 @@
     volumes:
       - ./redisdata:/data
   mongodb:
-    image: mongo
+    image: mongo:4.4.6
     container_name: mongodb
     restart: always
     environment:
