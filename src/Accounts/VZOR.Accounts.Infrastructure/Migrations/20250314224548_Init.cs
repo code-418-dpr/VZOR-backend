@@ -44,6 +44,34 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "users",
+                schema: "accounts",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    participant_account_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    email_confirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    password_hash = table.Column<string>(type: "text", nullable: true),
+                    security_stamp = table.Column<string>(type: "text", nullable: true),
+                    concurrency_stamp = table.Column<string>(type: "text", nullable: true),
+                    phone_number = table.Column<string>(type: "text", nullable: true),
+                    phone_number_confirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    two_factor_enabled = table.Column<bool>(type: "boolean", nullable: false),
+                    lockout_end = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    lockout_enabled = table.Column<bool>(type: "boolean", nullable: false),
+                    access_failed_count = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_users", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "role_claims",
                 schema: "accounts",
                 columns: table => new
@@ -99,47 +127,25 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id1 = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_admin_profiles", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "users",
-                schema: "accounts",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    participant_account_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    admin_profile_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    admin_profile_id1 = table.Column<Guid>(type: "uuid", nullable: true),
-                    is_active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
-                    user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    normalized_email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    email_confirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    password_hash = table.Column<string>(type: "text", nullable: true),
-                    security_stamp = table.Column<string>(type: "text", nullable: true),
-                    concurrency_stamp = table.Column<string>(type: "text", nullable: true),
-                    phone_number = table.Column<string>(type: "text", nullable: true),
-                    phone_number_confirmed = table.Column<bool>(type: "boolean", nullable: false),
-                    two_factor_enabled = table.Column<bool>(type: "boolean", nullable: false),
-                    lockout_end = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    lockout_enabled = table.Column<bool>(type: "boolean", nullable: false),
-                    access_failed_count = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_users", x => x.id);
                     table.ForeignKey(
-                        name: "fk_users_admin_profiles_admin_profile_id1",
-                        column: x => x.admin_profile_id1,
+                        name: "fk_admin_profiles_asp_net_users_user_id1",
+                        column: x => x.user_id1,
                         principalSchema: "accounts",
-                        principalTable: "admin_profiles",
+                        principalTable: "users",
                         principalColumn: "id");
+                    table.ForeignKey(
+                        name: "fk_admin_profiles_users_user_id",
+                        column: x => x.user_id,
+                        principalSchema: "accounts",
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -316,6 +322,13 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "ix_admin_profiles_user_id1",
+                schema: "accounts",
+                table: "admin_profiles",
+                column: "user_id1",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "ix_claims_user_id",
                 schema: "accounts",
                 table: "claims",
@@ -385,36 +398,19 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                 column: "normalized_email");
 
             migrationBuilder.CreateIndex(
-                name: "ix_users_admin_profile_id1",
-                schema: "accounts",
-                table: "users",
-                column: "admin_profile_id1");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 schema: "accounts",
                 table: "users",
                 column: "normalized_user_name",
                 unique: true);
-
-            migrationBuilder.AddForeignKey(
-                name: "fk_admin_profiles_asp_net_users_user_id",
-                schema: "accounts",
-                table: "admin_profiles",
-                column: "user_id",
-                principalSchema: "accounts",
-                principalTable: "users",
-                principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "fk_admin_profiles_asp_net_users_user_id",
-                schema: "accounts",
-                table: "admin_profiles");
+            migrationBuilder.DropTable(
+                name: "admin_profiles",
+                schema: "accounts");
 
             migrationBuilder.DropTable(
                 name: "claims",
@@ -462,10 +458,6 @@ namespace VZOR.Accounts.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "users",
-                schema: "accounts");
-
-            migrationBuilder.DropTable(
-                name: "admin_profiles",
                 schema: "accounts");
         }
     }

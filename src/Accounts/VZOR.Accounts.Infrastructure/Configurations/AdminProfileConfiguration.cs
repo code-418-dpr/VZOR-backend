@@ -16,5 +16,6 @@ public class AdminProfileConfiguration: IEntityTypeConfiguration<AdminProfile>
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasKey(pa => pa.Id);
+        
     }
 }

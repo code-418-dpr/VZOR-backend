@@ -183,12 +183,20 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
+                    b.Property<Guid?>("UserId1")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id1");
+
                     b.HasKey("Id")
                         .HasName("pk_admin_profiles");
 
                     b.HasIndex("UserId")
                         .IsUnique()
                         .HasDatabaseName("ix_admin_profiles_user_id");
+
+                    b.HasIndex("UserId1")
+                        .IsUnique()
+                        .HasDatabaseName("ix_admin_profiles_user_id1");
 
                     b.ToTable("admin_profiles", "accounts");
                 });
@@ -339,14 +347,6 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("access_failed_count");
 
-                    b.Property<Guid?>("AdminProfileId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("admin_profile_id");
-
-                    b.Property<Guid?>("AdminProfileId1")
-                        .HasColumnType("uuid")
-                        .HasColumnName("admin_profile_id1");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text")
@@ -416,9 +416,6 @@ namespace VZOR.Accounts.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_users");
-
-                    b.HasIndex("AdminProfileId1")
-                        .HasDatabaseName("ix_users_admin_profile_id1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -511,7 +508,12 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                         .HasForeignKey("VZOR.Accounts.Domain.AdminProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_admin_profiles_asp_net_users_user_id");
+                        .HasConstraintName("fk_admin_profiles_users_user_id");
+
+                    b.HasOne("VZOR.Accounts.Domain.User", null)
+                        .WithOne("AdminProfile")
+                        .HasForeignKey("VZOR.Accounts.Domain.AdminProfile", "UserId1")
+                        .HasConstraintName("fk_admin_profiles_asp_net_users_user_id1");
 
                     b.Navigation("User");
                 });
@@ -561,16 +563,6 @@ namespace VZOR.Accounts.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("VZOR.Accounts.Domain.User", b =>
-                {
-                    b.HasOne("VZOR.Accounts.Domain.AdminProfile", "AdminProfile")
-                        .WithMany()
-                        .HasForeignKey("AdminProfileId1")
-                        .HasConstraintName("fk_users_admin_profiles_admin_profile_id1");
-
-                    b.Navigation("AdminProfile");
-                });
-
             modelBuilder.Entity("VZOR.Accounts.Domain.Permission", b =>
                 {
                     b.Navigation("RolePermissions");
@@ -583,6 +575,8 @@ namespace VZOR.Accounts.Infrastructure.Migrations
 
             modelBuilder.Entity("VZOR.Accounts.Domain.User", b =>
                 {
+                    b.Navigation("AdminProfile");
+
                     b.Navigation("ParticipantAccount");
                 });
 #pragma warning restore 612, 618

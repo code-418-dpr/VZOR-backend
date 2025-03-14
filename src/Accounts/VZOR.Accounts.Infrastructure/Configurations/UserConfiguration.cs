@@ -23,5 +23,6 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         
         builder.Navigation(u => u.AdminProfile)
             .AutoInclude();
+        
     }
 }

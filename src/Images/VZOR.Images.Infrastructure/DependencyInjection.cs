@@ -123,7 +123,7 @@ public static class DependencyInjection
         services.AddScoped<WriteDbContext>();
         services.AddScoped<IReadDbContext, ReadDbContext>();
 
-        services.AddAsyncInitializer<DbInitializer>();
+        //services.AddAsyncInitializer<DbInitializer>();
         
         return services;
     }

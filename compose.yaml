@@ -78,6 +78,8 @@
     ports:
       - "9000:9000"
       - "9001:9001"
+    environment:
+      - MINIO_SERVER_URL = "http://localhost:9000"
     volumes:
       - minio-data:/data
     command: server --console-address ":9001" /data
