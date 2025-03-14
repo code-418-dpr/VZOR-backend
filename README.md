@@ -102,7 +102,6 @@ docker-compose up -d --build
 ```shell
 cd src
 dotnet ef migrations add <название миграции> --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
-dotnet ef migrations add <название миграции> --startup-project .\VZOR.Web\ --project .\Images\VZOR.Images.Infrastructure\ --context ApplicationDbContext
 cd ..
 ```
 
@@ -111,7 +110,6 @@ cd ..
 ```shell
 cd src
 dotnet ef database update --startup-project .\VZOR.Web\ --project .\Accounts\VZOR.Accounts.Infrastructure\ --context AccountsDbContext
-dotnet ef database update --startup-project .\VZOR.Web\ --project .\Images\VZOR.Images.Infrastructure\ --context ApplicationDbContext
 cd ..
 ```
 
