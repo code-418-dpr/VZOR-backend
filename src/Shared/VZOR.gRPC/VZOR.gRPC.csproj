@@ -7,18 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\visitor.proto" GrpcServices="Server" />
+        <Protobuf Include="Protos\image.proto" GrpcServices="Both" OutputDir="Services\" />
     </ItemGroup>
     
     <ItemGroup>
       <PackageReference Include="Google.Protobuf" Version="4.0.0-rc2" />
-      <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+      <PackageReference Include="Grpc.AspNetCore" Version="2.70.0" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.70.0" />
       <PackageReference Include="Grpc.Tools" Version="2.70.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
     </ItemGroup>
-
+    
     <ItemGroup>
       <Folder Include="Services\" />
     </ItemGroup>

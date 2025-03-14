@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Google.Protobuf;
 using Hangfire;
+using ImageGrpc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
@@ -27,6 +29,7 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly IFileProvider _fileProvider;
     private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly ImageService.ImageServiceClient _grpcClient;
 
     public UploadImageHandler(
         ILogger<UploadImageHandler> logger,
@@ -34,7 +37,8 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
         [FromKeyedServices(Constraints.Database.ElasticSearch)]IImageRepository repository,
         [FromKeyedServices(Constraints.Contexts.ImagesContext)]IUnitOfWork unitOfWork,
         IFileProvider fileProvider, 
-        IDateTimeProvider dateTimeProvider)
+        IDateTimeProvider dateTimeProvider,
+        ImageService.ImageServiceClient grpcClient)
     {
         _logger = logger;
         _validator = validator;
@@ -42,6 +46,7 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
         _unitOfWork = unitOfWork;
         _fileProvider = fileProvider;
         _dateTimeProvider = dateTimeProvider;
+        _grpcClient = grpcClient;
     }
 
     public async Task<Result> Handle(UploadImageCommand command, CancellationToken cancellationToken = default)
@@ -82,6 +87,8 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
             
             _logger.LogInformation("Uploaded photos by user with user id {userId}", command.UserId);
             
+            await SendImagesByGrpc(cancellationToken, images, filesData);
+            
             var ids = images.Select(x => x.Id).ToList();
             var uploadLinks = images.Select(x => x.UploadLink).ToList();
             
@@ -97,6 +104,36 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
             _logger.LogError(ex, ex.Message);
 
             return Error.Failure("upload.photos.error", "Cannot upload photos");
+        }
+    }
+
+    private async Task SendImagesByGrpc(CancellationToken cancellationToken, List<Image> images, List<FileData> filesData)
+    {
+        foreach (var image in images)
+        {
+            var fileData = filesData.FirstOrDefault(f => f.FileInfo.FilePath == image.UploadLink);
+            if (fileData != null)
+            {
+                await using var memoryStream = new MemoryStream();
+
+                await fileData.Stream.CopyToAsync(memoryStream, cancellationToken);
+                    
+                var byteArray = memoryStream.ToArray();
+                    
+                var byteString = ByteString.CopyFrom(byteArray);
+                    
+                var request = new UploadImageRequest
+                {
+                    ImageId = image.Id,
+                    ImageData = byteString
+                };
+
+                var response = await _grpcClient.UploadImageAsync(request, cancellationToken: cancellationToken);
+                if (!response.Success)
+                {
+                    _logger.LogError("Failed to upload image {ImageId} via gRPC: {Message}", image.Id, response.Message);
+                }
+            }
         }
     }
 }

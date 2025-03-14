@@ -1,6 +1,9 @@
-﻿using AspNet.Security.OAuth.Yandex;
+﻿using System.Net.Http.Headers;
+using System.Text.Json;
+using AspNet.Security.OAuth.Yandex;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -124,7 +127,7 @@ public static class DependencyInjection
             .AddCookie(options =>
             {
                 options.Cookie.SameSite = SameSiteMode.Strict;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 options.Cookie.HttpOnly = true;
             })
             .AddJwtBearer(options =>
@@ -135,13 +138,44 @@ public static class DependencyInjection
                 options.TokenValidationParameters =
                     TokenValidationParametersFactory.CreateWithLifeTime(jwtOptions);
             })
-            .AddYandex(options =>
+            /*.AddYandex(options =>
             {
                 options.ClientId = "7b6960e71e8a4a78acff0880aaf0d373"; 
                 options.ClientSecret = "82ea36e876104a7f9f2199c04933d248"; 
                 options.CallbackPath = new PathString("/api/Account/yandex-callback"); 
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            });
+            })*/
+            .AddOAuth("Yandex", options =>
+            {
+                options.ClientId = "7b6960e71e8a4a78acff0880aaf0d373";
+                options.ClientSecret = "82ea36e876104a7f9f2199c04933d248";
+                options.CallbackPath = new PathString("/api/Account/yandex-callback");
+
+                options.AuthorizationEndpoint = "https://oauth.yandex.ru/authorize";
+                options.TokenEndpoint = "https://oauth.yandex.ru/token";
+                options.UserInformationEndpoint = "https://login.yandex.ru/info";
+
+                options.Scope.Add("login:email");
+
+                options.SaveTokens = true;
+
+                options.Events = new OAuthEvents
+                {
+                    OnCreatingTicket = async context =>
+                    {
+                        var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+                        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+
+                        var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
+                        response.EnsureSuccessStatusCode();
+
+                        var user = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+
+                        context.RunClaimActions(user.RootElement);
+                    }
+                };
+            });;
 
         return services;
     }

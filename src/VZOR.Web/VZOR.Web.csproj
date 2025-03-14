@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.64.0"/>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.70.0" />
         <PackageReference Include="DotNetEnv" Version="3.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
@@ -33,6 +33,7 @@
         <ProjectReference Include="..\Images\VZOR.Images.Controllers\VZOR.Images.Controllers.csproj" />
         <ProjectReference Include="..\Images\VZOR.Images.Infrastructure\VZOR.Images.Infrastructure.csproj" />
         <ProjectReference Include="..\Shared\VZOR.Framework\VZOR.Framework.csproj" />
+        <ProjectReference Include="..\Shared\VZOR.gRPC\VZOR.gRPC.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,17 @@
+﻿syntax = "proto3";
+
+package imageGrpc;
+
+service ImageService {
+  rpc UploadImage (UploadImageRequest) returns (UploadImageResponse);
+}
+
+message UploadImageRequest {
+  string image_id = 1;
+  bytes image_data = 2;
+}
+
+message UploadImageResponse {
+  bool success = 1;
+  string message = 2;
+}

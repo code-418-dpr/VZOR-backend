@@ -9,8 +9,6 @@
 # Redis dump file
 /redis/dump.rdb
 
-# Entity Framework Core migrations
-**/Migrations/
 
 
 # User-specific files

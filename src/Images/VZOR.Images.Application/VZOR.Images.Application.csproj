@@ -8,7 +8,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\VZOR.Core\VZOR.Core.csproj" />
+      <ProjectReference Include="..\..\Shared\VZOR.gRPC\VZOR.gRPC.csproj" />
       <ProjectReference Include="..\VZOR.Images.Domain\VZOR.Images.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Google.Protobuf" Version="4.0.0-rc2" />
     </ItemGroup>
 
 </Project>

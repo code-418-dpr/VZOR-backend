@@ -21,7 +21,14 @@ public class UserScopedDataMiddleware
 
     public async Task InvokeAsync(HttpContext context, UserScopedData userScopedData)
     {
-        if (context.User.Identity is null || !context.User.Identity.IsAuthenticated)
+        if (context.Request.Path.StartsWithSegments("/api/Account/yandex-callback") ||
+            context.Request.Path.StartsWithSegments("/api/Account/yandex-login"))
+        {
+            await _next(context);
+            return;
+        }
+        
+        if (context.User?.Identity is null || !context.User.Identity.IsAuthenticated)
         {
             await _next(context);
             return;

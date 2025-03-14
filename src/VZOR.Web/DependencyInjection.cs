@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using Hangfire.PostgreSql;
+using ImageGrpc;
 using MassTransit;
 using VZOR.Accounts.Application;
 using VZOR.Accounts.Infrastructure;
@@ -21,7 +22,8 @@ public static class DependencyInjection
             .AddImagesModule(configuration)
             .AddFramework()
             .AddHangfire(configuration)
-            .AddMessageBus(configuration);
+            .AddMessageBus(configuration)
+            .AddGrpc(configuration);
         
         return services;
     }
@@ -82,6 +84,21 @@ public static class DependencyInjection
             });
         });
         
+        return services;
+    }
+
+    private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddGrpcClient<ImageService.ImageServiceClient>(options =>
+        {
+            options.Address = new Uri(configuration["Grpc:ImageServiceUrl"]!);
+        });
+        
+        services.AddGrpc(options =>
+        {
+            options.EnableDetailedErrors = true;
+        });
+
         return services;
     }
     
