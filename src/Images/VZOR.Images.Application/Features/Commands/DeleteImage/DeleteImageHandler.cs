@@ -26,7 +26,7 @@ public class DeleteImageHandler: ICommandHandler<DeleteImageCommand>
     public DeleteImageHandler(
         ILogger<DeleteImageHandler> logger,
         IValidator<DeleteImageCommand> validator,
-        [FromKeyedServices(Constraints.Database.Mongo)]IImageRepository imageRepository,
+        [FromKeyedServices(Constraints.Database.ElasticSearch)]IImageRepository imageRepository,
         IFileProvider fileProvider)
     {
         _logger = logger;

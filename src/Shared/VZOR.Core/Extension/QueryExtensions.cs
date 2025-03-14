@@ -49,6 +49,27 @@ public static class QueryExtensions
         };
     }
     
+    public static PagedList<T> ToPagedList<T>(
+        this IEnumerable<T> source,
+        int page,
+        int pageSize)
+    {
+        var totalCount = source.Count();
+    
+        var items = source
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    
+        return new PagedList<T>
+        {
+            Items = items,
+            Page = page,
+            PageSize = pageSize,
+            TotalCount = totalCount
+        };
+    }
+    
     public static IQueryable<T> WhereIf<T>(
         this IQueryable<T> source,
         bool condition,

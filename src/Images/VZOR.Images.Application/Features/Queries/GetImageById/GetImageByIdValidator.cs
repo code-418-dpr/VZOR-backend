@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace VZOR.Images.Application.Features.Queries.GetImageByIdQuery;
+namespace VZOR.Images.Application.Features.Queries.GetImageById;
 
 public class GetImageByIdValidator: AbstractValidator<GetImageByIdQuery>
 {

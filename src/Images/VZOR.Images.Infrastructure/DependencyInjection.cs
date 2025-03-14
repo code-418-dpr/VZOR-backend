@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Hybrid;
+﻿using Elastic.Clients.Elasticsearch;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -29,8 +30,28 @@ public static class DependencyInjection
             .AddDbContexts()
             .AddRepositories()
             .AddRedis(configuration)
-            .AddMongo(configuration);
+            .AddMongo(configuration)
+            .AddElasticsearch(configuration);
         
+        return services;
+    }
+    
+    private static IServiceCollection AddElasticsearch(
+        this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<ElasticsearchOptions>(
+            configuration.GetSection(ElasticsearchOptions.ELASTICSEARCH));
+        
+        services.AddSingleton<ElasticsearchClient>(serviceProvider =>
+        {
+            var options = serviceProvider.GetRequiredService<IOptions<ElasticsearchOptions>>().Value;
+
+            var settings = new ElasticsearchClientSettings(new Uri(options.Uri))
+                .DefaultIndex(options.DefaultIndex);
+
+            return new ElasticsearchClient(settings);
+        });
+
         return services;
     }
 
@@ -63,6 +84,7 @@ public static class DependencyInjection
     {
         services.AddKeyedScoped<IImageRepository, ImageRepository>(Constraints.Database.Postgres);
         services.AddKeyedScoped<IImageRepository, ImageMongoRepository>(Constraints.Database.Mongo);
+        services.AddKeyedScoped<IImageRepository, ElasticsearchImageRepository>(Constraints.Database.ElasticSearch);
         
         return services;
     }

@@ -170,6 +170,56 @@ public class MinioProvider: IFileProvider
         }
     }
 
+    public async Task<Result<List<string>>> DownloadFilesByPresignedUrls(
+        IEnumerable<FileMetadata> files, CancellationToken cancellationToken = default)
+    {
+        if (!files.Any())
+            return Errors.General.Null();
+
+        try
+        {
+            await IsBucketExist([files.FirstOrDefault()!.BucketName], cancellationToken);
+
+            var presignedArgs = new List<PresignedGetObjectArgs>();
+            
+            foreach (var file in files)
+            {
+                presignedArgs.Add(new PresignedGetObjectArgs()
+                    .WithBucket(file.BucketName)
+                    .WithObject(file.ObjectName)
+                    .WithExpiry(24 * 60 * 60));
+            }
+            
+            var results = new ConcurrentBag<string>();
+            var errors = new ConcurrentBag<ErrorList>();
+
+            await Parallel.ForEachAsync(presignedArgs, new ParallelOptions
+                {
+                    MaxDegreeOfParallelism = MAX_DEGREE_OF_PARALLELISM,
+                    CancellationToken = cancellationToken
+                },
+                async (file, ct) =>
+                {
+                    var result = await _minioClient.PresignedGetObjectAsync(file);
+                    if (result is null)
+                        errors.Add(Errors.General.Null());
+                    else
+                        results.Add(result);
+                });
+            
+            
+            if (errors.Any())
+                return Error.Failure("file.download", $"Failed to download {errors.Count} files");
+
+            return results.ToList();
+        }
+        catch (Exception ex)
+        {
+
+            return Error.Failure("file.download","Fail to upload files");
+        }
+    }
+    
     private async Task<Result<string>> PutObject(
         FileData fileData,
         CancellationToken cancellationToken = default)

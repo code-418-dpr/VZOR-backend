@@ -1,40 +1,46 @@
 ﻿using System.Linq.Expressions;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
+using VZOR.Core.Dtos;
 using VZOR.Core.Extension;
 using VZOR.Core.Models;
-using VZOR.Images.Application.Database;
+using VZOR.Images.Application.FileProvider;
+using VZOR.Images.Application.FileProviders;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Domain;
 using VZOR.SharedKernel;
 using VZOR.SharedKernel.Constraints;
 
-namespace VZOR.Images.Application.Features.Queries.GetImagesQuery;
+namespace VZOR.Images.Application.Features.Queries.GetImages;
 
-public class GetImagesHandler : IQueryHandler<PagedList<Image>, GetImagesQuery>
+public class GetImagesHandler : IQueryHandler<PagedList<ImageDto>, GetImagesQuery>
 {
+    public const string BUCKET_NAME = "vzor";
+    
     private readonly ILogger<GetImagesHandler> _logger;
     private readonly IValidator<GetImagesQuery> _validator;
     private readonly HybridCache _hybridCache;
     private readonly IImageRepository _imageRepository;
+    private readonly IFileProvider _fileProvider;
 
     public GetImagesHandler(
         ILogger<GetImagesHandler> logger,
         IValidator<GetImagesQuery> validator,
         HybridCache hybridCache,
-        [FromKeyedServices(Constraints.Database.Mongo)]IImageRepository imageRepository)
+        [FromKeyedServices(Constraints.Database.Mongo)]IImageRepository imageRepository,
+        IFileProvider fileProvider)
     {
         _logger = logger;
         _validator = validator;
         _hybridCache = hybridCache;
         _imageRepository = imageRepository;
+        _fileProvider = fileProvider;
     }
 
-    public async Task<Result<PagedList<Image>>> Handle(
+    public async Task<Result<PagedList<ImageDto>>> Handle(
         GetImagesQuery query, CancellationToken cancellationToken = default)
     {
         var validationResult = await _validator.ValidateAsync(query, cancellationToken);
@@ -53,7 +59,7 @@ public class GetImagesHandler : IQueryHandler<PagedList<Image>, GetImagesQuery>
             cancellationToken: cancellationToken);
 
         if (imagesCahce.Count == 0)
-            return new PagedList<Image>();
+            return new PagedList<ImageDto>();
 
         var images = imagesCahce.AsQueryable();
         
@@ -64,8 +70,23 @@ public class GetImagesHandler : IQueryHandler<PagedList<Image>, GetImagesQuery>
         images = query.SortDirection?.ToLower() == "desc"
             ? images.OrderByDescending(keySelector) 
             : images.OrderBy(keySelector);
+
+        var presignedUrls = await _fileProvider.DownloadFilesByPresignedUrls(images
+            .Select(i => new FileMetadata(BUCKET_NAME, i.UploadLink)), cancellationToken);
+
+        var imagesDto = images
+            .Zip(presignedUrls.Value, (image, presignedUrl) => new ImageDto
+            {
+                Id = image.Id,
+                ProcessingResult = image.ProcessingResult,
+                UploadDate = image.UploadDate,
+                UserId = image.UserId,
+                PresignedDownloadUrl = presignedUrl ,
+                UploadLink = image.UploadLink
+            })
+            .ToList();
         
-        var pagedList = images.ToPagedList(
+        var pagedList = imagesDto.ToPagedList(
             query.Page,
             query.PageSize);
         

@@ -87,9 +87,22 @@
       interval: 10s
       timeout: 5s
       retries: 3
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node 
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m 
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200" 
 
 volumes:
   postgres-data:
   redis-data:
   minio-data:
   rabbitmq_data:
+  elasticsearch_data:

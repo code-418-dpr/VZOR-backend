@@ -5,8 +5,9 @@ using VZOR.Framework.Models;
 using VZOR.Framework.Processors;
 using VZOR.Images.Application.Features.Commands.DeleteImage;
 using VZOR.Images.Application.Features.Commands.UploadImage;
-using VZOR.Images.Application.Features.Queries.GetImageByIdQuery;
-using VZOR.Images.Application.Features.Queries.GetImagesQuery;
+using VZOR.Images.Application.Features.Queries.GetImageById;
+using VZOR.Images.Application.Features.Queries.GetImages;
+using VZOR.Images.Application.Features.Queries.GetImagesByQuery;
 using VZOR.Images.Controllers.Requests;
 
 namespace VZOR.Images.Controllers;
@@ -87,6 +88,24 @@ public class ImagesController: ApplicationController
         CancellationToken cancellationToken = default)
     {
         var query = new GetImageByIdQuery(imageId);
+        
+        var result = await handler.Handle(query, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Errors.ToResponse();
+        
+        return Ok(result);
+    }
+    
+    [Permission("read")]
+    [HttpGet("searching")]
+    public async Task<ActionResult> SearchImageByQuery(
+        [FromQuery] GetImagesByQueryRequest request,
+        [FromServices] UserScopedData userScopedData,
+        [FromServices] GetImagesByQueryHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetImagesByQueryQuery(userScopedData.UserId, request.Query);
         
         var result = await handler.Handle(query, cancellationToken);
 

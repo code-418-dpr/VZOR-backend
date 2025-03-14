@@ -28,5 +28,6 @@ public static partial class Constraints
     {
         Mongo,
         Postgres,
+        ElasticSearch
     }
 }

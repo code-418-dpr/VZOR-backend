@@ -31,7 +31,7 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
     public UploadImageHandler(
         ILogger<UploadImageHandler> logger,
         IValidator<UploadImageCommand> validator,
-        [FromKeyedServices(Constraints.Database.Mongo)]IImageRepository repository,
+        [FromKeyedServices(Constraints.Database.ElasticSearch)]IImageRepository repository,
         [FromKeyedServices(Constraints.Contexts.ImagesContext)]IUnitOfWork unitOfWork,
         IFileProvider fileProvider, 
         IDateTimeProvider dateTimeProvider)

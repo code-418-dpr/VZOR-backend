@@ -13,4 +13,6 @@ public interface IImageRepository
         string userId, CancellationToken cancellationToken = default);
     Task<List<Image>> GetByUserIdWithPaginationAsync(
         string userId, int page, int pageSize, CancellationToken cancellationToken = default);
+
+    Task<List<Image>> SearchByQueryAsync(string query, CancellationToken cancellationToken = default);
 }

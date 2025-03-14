@@ -50,7 +50,12 @@ public class ImageRepository(WriteDbContext context): IImageRepository
         
         return images;
     }
-    
+
+    public Task<List<Image>> SearchByQueryAsync(string query, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<Image>> GetByUserIdAsync(
         string userId, CancellationToken cancellationToken = default)
     {

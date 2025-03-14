@@ -24,7 +24,7 @@ public class ImageMongoRepository: IImageRepository
     public async Task<Image?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         var image = await (await _imageCollection.FindAsync(image => 
-            image.Id == id.ToString(), cancellationToken: cancellationToken))
+            image.Id == id, cancellationToken: cancellationToken))
             .FirstOrDefaultAsync(cancellationToken);
         
         return image;
@@ -68,5 +68,10 @@ public class ImageMongoRepository: IImageRepository
             .ToList();
         
         return images;
+    }
+
+    public Task<List<Image>> SearchByQueryAsync(string query, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 }

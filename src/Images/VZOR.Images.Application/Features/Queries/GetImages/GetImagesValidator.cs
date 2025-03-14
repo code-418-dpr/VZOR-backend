@@ -2,7 +2,7 @@
 using VZOR.Core.Validators;
 using VZOR.SharedKernel.Errors;
 
-namespace VZOR.Images.Application.Features.Queries.GetImagesQuery;
+namespace VZOR.Images.Application.Features.Queries.GetImages;
 
 public class GetImagesValidator : AbstractValidator<GetImagesQuery>
 {
