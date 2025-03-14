@@ -13,6 +13,8 @@ public class User:IdentityUser<Guid>
     public IReadOnlyList<Role> Roles => _roles;
     public Guid? ParticipantAccountId { get; set; }
     public ParticipantAccount? ParticipantAccount { get; set; }
+    public Guid? AdminProfileId { get; set; }
+    public AdminProfile? AdminProfile { get; set; }
     public bool IsActive { get; set; }
     
     public static User CreateAdmin(string userName, string email, Role role)

@@ -20,5 +20,8 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
 
         builder.Navigation(u => u.ParticipantAccount)
             .AutoInclude();
+        
+        builder.Navigation(u => u.AdminProfile)
+            .AutoInclude();
     }
 }

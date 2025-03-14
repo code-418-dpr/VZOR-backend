@@ -53,10 +53,14 @@ public class JwtTokenProvider : ITokenProvider
             .Select(p => new Claim(CustomClaims.Permission, p));
         
         var jti = Guid.NewGuid();
+
+        var userName = user.ParticipantAccount?.Name ?? string.Empty;
         
         var claims = new[]
         {
             new Claim(CustomClaims.Id, user.Id.ToString()),
+            new Claim(CustomClaims.Username, userName),
+            new Claim(CustomClaims.Role, user.Roles.FirstOrDefault()!.Name!),
             new Claim(CustomClaims.Email, user.Email!),
             new Claim(CustomClaims.Jti, jti.ToString())
         };
