@@ -1,4 +1,5 @@
 using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -87,19 +88,29 @@ public class ElasticsearchImageRepository : IImageRepository
 
     public async Task<List<Image>> SearchByQueryAsync(string query, CancellationToken cancellationToken = default)
     {
-        var searchResponse = await _elasticsearchClient.SearchAsync<Image>(s => s
-            .Index("images")
-            .Query(q => q
-                .Match(m => m
-                    .Field(f => f.ProcessingResult) // Замените на нужное поле
-                    .Query(query.Trim())
-                )
-            ), cancellationToken);
+        var request = new SearchRequest<Image>
+        {
+            Query = new MultiMatchQuery
+            {
+                Fields = new Field[]
+                {
+                    Infer.Field<Image>(i => i.ProcessingResult.Description),
+                    Infer.Field<Image>(i => i.ProcessingResult.Text),
+                    Infer.Field<Image>(i => i.ProcessingResult.Objects.First())
+                },
+                Query = query.Trim(),
+                Type = TextQueryType.BestFields,
+                Operator = Operator.Or,
+                Fuzziness = new Fuzziness("AUTO")
+            }
+        };
+
+        var searchResponse = await _elasticsearchClient.SearchAsync<Image>(request, cancellationToken);
 
         if (!searchResponse.IsValidResponse)
         {
-            _logger.LogError($"Search failed: {searchResponse}");
-            return new List<Image>(); // Возвращаем пустой список в случае ошибки
+            _logger.LogError($"Search failed: {searchResponse.DebugInformation}");
+            return new List<Image>();
         }
 
         return searchResponse.Documents.ToList();

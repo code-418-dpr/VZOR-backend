@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
 using VZOR.Core.Dtos;
 using VZOR.Core.Extension;
-using VZOR.Images.Application.FileProvider;
+using VZOR.Images.Application.FileModels;
 using VZOR.Images.Application.FileProviders;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Domain;
@@ -54,7 +54,12 @@ public class GetImageByIdHandler: IQueryHandler<ImageDto, GetImageByIdQuery>
         var imageDto = new ImageDto
         {
             Id = image.Id,
-            ProcessingResult = image.ProcessingResult,
+            ProcessingResult = new ProcessingResultDto
+            {
+                Description  = image.ProcessingResult.Description,
+                Objects = image.ProcessingResult.Objects,
+                Text = image.ProcessingResult.Text
+            },
             UploadDate = image.UploadDate,
             UserId = image.UserId,
             PresignedDownloadUrl = presignedUrl.Value.FirstOrDefault()!,

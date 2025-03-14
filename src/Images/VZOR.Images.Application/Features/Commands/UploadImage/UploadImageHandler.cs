@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
 using VZOR.Core.Database;
 using VZOR.Core.Extension;
-using VZOR.Images.Application.FileProvider;
+using VZOR.Images.Application.FileModels;
 using VZOR.Images.Application.FileProviders;
 using VZOR.Images.Application.Jobs;
 using VZOR.Images.Application.Repositories;
@@ -13,7 +13,7 @@ using VZOR.Images.Domain;
 using VZOR.SharedKernel;
 using VZOR.SharedKernel.Constraints;
 using VZOR.SharedKernel.Errors;
-using FileInfo = VZOR.Images.Application.FileProvider.FileInfo;
+using FileInfo = VZOR.Images.Application.FileModels.FileInfo;
 
 namespace VZOR.Images.Application.Features.Commands.UploadImage;
 
@@ -70,7 +70,7 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
                     Id = id.ToString(),
                     UserId = command.UserId.ToString(),
                     UploadLink = uploadLink,
-                    UploadDate = _dateTimeProvider.UtcNow,
+                    UploadDate = _dateTimeProvider.UtcNow
                 });
             }
 

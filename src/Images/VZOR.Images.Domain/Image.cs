@@ -14,6 +14,6 @@ public class Image
     public required DateTime UploadDate { get; init; }
     [BsonRequired]
     public required string UploadLink { get; init; }
-    [BsonElement]
-    public string? ProcessingResult { get; set; }
+    [BsonElement] 
+    public ProcessingResult ProcessingResult { get; set; } = new();
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
 using VZOR.Core.Extension;
-using VZOR.Images.Application.FileProvider;
+using VZOR.Images.Application.FileModels;
 using VZOR.Images.Application.FileProviders;
 using VZOR.Images.Application.Jobs;
 using VZOR.Images.Application.Repositories;

@@ -1,6 +1,6 @@
-using VZOR.Images.Application.FileProvider;
+using VZOR.Images.Application.FileModels;
 using VZOR.SharedKernel;
-using FileInfo = VZOR.Images.Application.FileProvider.FileInfo;
+using FileInfo = VZOR.Images.Application.FileModels.FileInfo;
 
 namespace VZOR.Images.Application.FileProviders;
 

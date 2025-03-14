@@ -1,3 +1,3 @@
-namespace VZOR.Images.Application.FileProvider;
+namespace VZOR.Images.Application.FileModels;
 
 public record FileMetadata(string BucketName, string ObjectName);

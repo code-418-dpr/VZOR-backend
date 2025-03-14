@@ -3,11 +3,11 @@ using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.ApiEndpoints;
 using Minio.DataModel.Args;
-using VZOR.Images.Application.FileProvider;
+using VZOR.Images.Application.FileModels;
 using VZOR.Images.Application.FileProviders;
 using VZOR.SharedKernel;
 using VZOR.SharedKernel.Errors;
-using FileInfo = VZOR.Images.Application.FileProvider.FileInfo;
+using FileInfo = VZOR.Images.Application.FileModels.FileInfo;
 
 
 namespace VZOR.Images.Infrastructure.Providers;
