@@ -109,30 +109,47 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
 
     private async Task SendImagesByGrpc(CancellationToken cancellationToken, List<Image> images, List<FileData> filesData)
     {
+        TimeSpan timeout = TimeSpan.FromSeconds(15);
+        
         foreach (var image in images)
         {
             var fileData = filesData.FirstOrDefault(f => f.FileInfo.FilePath == image.UploadLink);
-            if (fileData != null)
+            
+            if (fileData == null) continue;
+
+            try
             {
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                cts.CancelAfter(timeout);
+
                 await using var memoryStream = new MemoryStream();
 
                 await fileData.Stream.CopyToAsync(memoryStream, cancellationToken);
-                    
+
                 var byteArray = memoryStream.ToArray();
-                    
+
                 var byteString = ByteString.CopyFrom(byteArray);
-                    
+
                 var request = new UploadImageRequest
                 {
                     ImageId = image.Id,
                     ImageData = byteString
                 };
 
-                var response = await _grpcClient.UploadImageAsync(request, cancellationToken: cancellationToken);
+                var response = await _grpcClient.UploadImageAsync(request, cancellationToken: cts.Token);
                 if (!response.Success)
                 {
-                    _logger.LogError("Failed to upload image {ImageId} via gRPC: {Message}", image.Id, response.Message);
+                    _logger.LogError("Failed to upload image {ImageId} via gRPC: {Message}", image.Id,
+                        response.Message);
                 }
+            }
+            catch (TaskCanceledException)
+            {
+                _logger.LogWarning("Timeout occurred while uploading image {ImageId} via gRPC", image.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while uploading image {ImageId} via gRPC", image.Id);
             }
         }
     }

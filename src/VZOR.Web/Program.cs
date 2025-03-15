@@ -5,6 +5,7 @@ using VZOR.Framework.Middlewares;
 using VZOR.Web;
 using VZOR.Web.Extensions;
 
+//TODO: Minio не должен работать на локалхосте в докере!
 
 DotNetEnv.Env.Load();
 
