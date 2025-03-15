@@ -1,4 +1,6 @@
-﻿services:
+﻿version: '3.8'
+
+services:
   web:
     image: web:0.1
     build:
@@ -10,7 +12,10 @@
       - "8080:8080"
     depends_on:
       - postgres
-      - minio  
+      - minio
+    networks:
+      - vzor-network
+
   postgres:
     container_name: postgres
     image: postgres:17.4
@@ -32,6 +37,9 @@
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - vzor-network
+
   seq:
     image: datalust/seq:latest
     container_name: seq
@@ -41,6 +49,9 @@
     ports:
       - "5341:5341"
       - "8081:80"
+    networks:
+      - vzor-network
+
   redis:
     image: redis:8.0-M03-alpine3.21
     container_name: redis
@@ -52,6 +63,9 @@
       - "6380:6379"
     volumes:
       - ./redisdata:/data
+    networks:
+      - vzor-network
+
   mongodb:
     image: mongo:4.4.6
     container_name: mongodb
@@ -62,6 +76,9 @@
       MONGO_INITDB_DATABASE: "vzor"
     ports:
       - "27017:27017"
+    networks:
+      - vzor-network
+
   rabbitmq:
     image: rabbitmq:management-alpine
     container_name: rabbitmq
@@ -72,6 +89,9 @@
       - "5672:5672"
       - "15672:15672"
     restart: always
+    networks:
+      - vzor-network
+
   minio:
     container_name: minio
     image: minio/minio
@@ -79,7 +99,7 @@
       - "9000:9000"
       - "9001:9001"
     environment:
-      - MINIO_SERVER_URL = "http://localhost:9000"
+      - MINIO_SERVER_URL=http://minio:9000
     volumes:
       - minio-data:/data
     command: server --console-address ":9001" /data
@@ -89,18 +109,22 @@
       interval: 10s
       timeout: 5s
       retries: 3
-  
+    networks:
+      - vzor-network
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
     container_name: elasticsearch
     environment:
-      - discovery.type=single-node 
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m 
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
       - xpack.security.enabled=false
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200" 
+      - "9200:9200"
+    networks:
+      - vzor-network
 
 volumes:
   postgres-data:
@@ -108,3 +132,7 @@ volumes:
   minio-data:
   rabbitmq_data:
   elasticsearch_data:
+
+networks:
+  vzor-network:
+    driver: bridge
