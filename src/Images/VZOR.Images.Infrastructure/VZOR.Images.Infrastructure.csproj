@@ -20,8 +20,8 @@
         <PackageReference Include="MongoDB.Driver" Version="3.2.1" />
         <PackageReference Include="MongoDB.Driver.Core" Version="2.30.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.2" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.2.0-preview.1.25105.6" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.3.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
         <PackageReference Include="NRedisStack" Version="0.13.2" />
