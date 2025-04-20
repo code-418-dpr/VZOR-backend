@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\VZOR.Core\VZOR.Core.csproj" />
       <ProjectReference Include="..\..\Shared\VZOR.gRPC\VZOR.gRPC.csproj" />
+      <ProjectReference Include="..\VZOR.Images.Contracts\VZOR.Images.Contracts.csproj" />
       <ProjectReference Include="..\VZOR.Images.Domain\VZOR.Images.Domain.csproj" />
     </ItemGroup>
 

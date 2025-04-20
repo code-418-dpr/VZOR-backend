@@ -2,6 +2,7 @@ using Hangfire;
 using VZOR.Accounts.Domain;
 using VZOR.Accounts.Infrastructure.Seeding;
 using VZOR.Framework.Middlewares;
+using VZOR.Images.Infrastructure;
 using VZOR.Web;
 using VZOR.Web.Extensions;
 
@@ -21,6 +22,9 @@ builder.Services.AddLogger(builder.Configuration);
 builder.Services.AddSwagger();
 
 var app = builder.Build();
+
+var seeder = app.Services.GetRequiredService<Seeding>();
+await seeder.SeedBucket();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

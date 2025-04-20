@@ -1,4 +1,5 @@
-﻿using Elastic.Clients.Elasticsearch;
+﻿using Amazon.S3;
+using Elastic.Clients.Elasticsearch;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -144,10 +145,28 @@ public static class DependencyInjection
             options.WithCredentials(minioOptions.AccessKey, minioOptions.SecretKey);
 
             options.WithSSL(minioOptions.WithSsl);
-
+            
+        });
+        
+        services.AddSingleton<IAmazonS3>(_ =>
+        {
+            var minioOptions = configuration.GetSection(MinioOptions.MINIO)
+                .Get<MinioOptions>() ?? throw new ApplicationException("Missing minio configuration");
+            
+            var config = new AmazonS3Config
+            {
+                ServiceURL = minioOptions.AwsEndpoint,
+                ForcePathStyle = true,
+                UseHttp = true
+            };
+            
+            return new AmazonS3Client(minioOptions.AccessKey, minioOptions.SecretKey, config);
         });
 
+
         services.AddScoped<IFileProvider, MinioProvider>();
+
+        services.AddTransient<Seeding>();
 
         return services;
     }

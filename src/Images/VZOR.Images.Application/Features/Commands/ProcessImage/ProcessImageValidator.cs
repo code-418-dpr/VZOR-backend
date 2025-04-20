@@ -5,9 +5,9 @@ using VZOR.SharedKernel.Errors;
 
 namespace VZOR.Images.Application.Features.Commands.UploadImage;
 
-public class UploadImageValidator : AbstractValidator<UploadImageCommand>
+public class ProcessImageValidator : AbstractValidator<ProcessImageCommand>
 {
-    public UploadImageValidator()
+    public ProcessImageValidator()
     {
         RuleFor(c => c.UserId)
             .NotEmpty()

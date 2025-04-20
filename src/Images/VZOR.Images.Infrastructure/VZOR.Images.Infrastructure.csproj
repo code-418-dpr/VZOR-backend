@@ -11,6 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AWSSDK.Core" Version="3.7.402.43" />
+        <PackageReference Include="AWSSDK.S3" Version="3.7.416.13" />
         <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
         <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.17.1" />
         <PackageReference Include="Extensions.Hosting.AsyncInitialization" Version="3.0.1" />
@@ -27,10 +29,6 @@
         <PackageReference Include="NRedisStack" Version="0.13.2" />
         <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="11.0.0" />
         <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="11.0.0" />  
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="gRPC\" />
     </ItemGroup>
 
 </Project>

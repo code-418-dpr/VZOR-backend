@@ -19,21 +19,21 @@ using FileInfo = VZOR.Images.Application.FileModels.FileInfo;
 
 namespace VZOR.Images.Application.Features.Commands.UploadImage;
 
-public class UploadImageHandler: ICommandHandler<UploadImageCommand>
+public class ProcessImageHandler: ICommandHandler<ProcessImageCommand>
 {
     public const string BUCKET_NAME = "vzor";
     
-    private readonly ILogger<UploadImageHandler> _logger;
-    private readonly IValidator<UploadImageCommand> _validator;
+    private readonly ILogger<ProcessImageHandler> _logger;
+    private readonly IValidator<ProcessImageCommand> _validator;
     private readonly IImageRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IFileProvider _fileProvider;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly ImageService.ImageServiceClient _grpcClient;
 
-    public UploadImageHandler(
-        ILogger<UploadImageHandler> logger,
-        IValidator<UploadImageCommand> validator,
+    public ProcessImageHandler(
+        ILogger<ProcessImageHandler> logger,
+        IValidator<ProcessImageCommand> validator,
         [FromKeyedServices(Constraints.Database.ElasticSearch)]IImageRepository repository,
         [FromKeyedServices(Constraints.Contexts.ImagesContext)]IUnitOfWork unitOfWork,
         IFileProvider fileProvider, 
@@ -49,7 +49,7 @@ public class UploadImageHandler: ICommandHandler<UploadImageCommand>
         _grpcClient = grpcClient;
     }
 
-    public async Task<Result> Handle(UploadImageCommand command, CancellationToken cancellationToken = default)
+    public async Task<Result> Handle(ProcessImageCommand command, CancellationToken cancellationToken = default)
     {
         var validatorResult = await _validator.ValidateAsync(command, cancellationToken);
         if (!validatorResult.IsValid)

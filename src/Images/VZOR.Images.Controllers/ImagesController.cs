@@ -19,14 +19,14 @@ public class ImagesController: ApplicationController
     public async Task<ActionResult> UploadImages(
         [FromForm] UploadImagesRequest request,
         [FromServices] UserScopedData userScopedData,
-        [FromServices] UploadImageHandler handler,
+        [FromServices] ProcessImageHandler handler,
         CancellationToken cancellationToken = default)
     {
         await using var fileProcessor = new FormFileProcessor();
 
         var fileDtos = fileProcessor.Process(request.Files);
 
-        var command = new UploadImageCommand(userScopedData.UserId, fileDtos);
+        var command = new ProcessImageCommand(userScopedData.UserId, fileDtos);
 
         var result = await handler.Handle(command, cancellationToken);
 

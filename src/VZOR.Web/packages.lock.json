@@ -148,8 +148,16 @@
       },
       "AWSSDK.Core": {
         "type": "Transitive",
-        "resolved": "3.7.100.14",
-        "contentHash": "gnEgxBlk4PFEfdPE8Lkf4+D16MZFYSaW7/o6Wwe5e035QWUkTJX0Dn4LfTCdV5QSEL/fOFxu+yCAm55eIIBgog=="
+        "resolved": "3.7.402.43",
+        "contentHash": "iAo889ehvfXCORxLF+o7BmKnBAtBTWD7aVMTP+P1sPlHlVqvIj4S3MUaDYjR7b1MGUTsE+UBNyj3tu+cj1MBqA=="
+      },
+      "AWSSDK.S3": {
+        "type": "Transitive",
+        "resolved": "3.7.416.13",
+        "contentHash": "pt1Muf1j/+dRJw2LzWYR8FtMrw1opi+ISjMqmVVAIALB9+7VND4Pb8Pir095cmNwHUGX5G73vAy7+cnEzKb6UA==",
+        "dependencies": {
+          "AWSSDK.Core": "[3.7.402.43, 4.0.0)"
+        }
       },
       "AWSSDK.SecurityToken": {
         "type": "Transitive",
@@ -2376,6 +2384,7 @@
         "dependencies": {
           "Google.Protobuf": "[4.0.0-rc2, )",
           "VZOR.Core": "[1.0.0, )",
+          "VZOR.Images.Contracts": "[1.0.0, )",
           "VZOR.Images.Domain": "[1.0.0, )",
           "VZOR.gRPC": "[1.0.0, )"
         }
@@ -2402,6 +2411,8 @@
       "vzor.images.infrastructure": {
         "type": "Project",
         "dependencies": {
+          "AWSSDK.Core": "[3.7.402.43, )",
+          "AWSSDK.S3": "[3.7.416.13, )",
           "EFCore.NamingConventions": "[9.0.0, )",
           "Elastic.Clients.Elasticsearch": "[8.17.1, )",
           "Extensions.Hosting.AsyncInitialization": "[3.0.1, )",
