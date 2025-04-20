@@ -5,13 +5,13 @@ namespace VZOR.Images.Application.FileProviders;
 
 public interface IS3FileProvider
 {
-    Task<Result<string>> GetPresignedUrlForUpload(FileMetadata fileMetadata, CancellationToken cancellationToken);
+    Task<Result<string>> GetPresignedUrlForUpload(FileMetadataS3 fileMetadata, CancellationToken cancellationToken);
     Task<Result<IReadOnlyList<string>>> DownloadFiles(
-        IEnumerable<FileMetadata> filesMetadata, CancellationToken cancellationToken = default);
+        IEnumerable<FileMetadataS3> filesMetadata, CancellationToken cancellationToken = default);
     Task<Result<List<string>>> GetPresignedUrlsForDeleteParallel(
-        IEnumerable<FileMetadata> fileMetadata, CancellationToken cancellationToken);
-    Task DeleteFile(FileMetadata fileMetadata, CancellationToken cancellationToken = default);
+        IEnumerable<FileMetadataS3> fileMetadata, CancellationToken cancellationToken);
+    Task DeleteFile(FileMetadataS3 fileMetadata, CancellationToken cancellationToken = default);
     Task<Result<List<string>>> GetPresignedUrlsForUploadParallel(
-        IEnumerable<FileMetadata> fileMetadata,
+        IEnumerable<FileMetadataS3> fileMetadata,
         CancellationToken cancellationToken = default);
 }

@@ -165,6 +165,7 @@ public static class DependencyInjection
 
 
         services.AddScoped<IFileProvider, MinioProvider>();
+        services.AddScoped<IS3FileProvider, S3FileProvider>();
 
         services.AddTransient<Seeding>();
 
