@@ -159,7 +159,6 @@ public static class DependencyInjection
                 ForcePathStyle = true,
                 UseHttp = true
             };
-            
             return new AmazonS3Client(minioOptions.AccessKey, minioOptions.SecretKey, config);
         });
 

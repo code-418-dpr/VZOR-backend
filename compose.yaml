@@ -99,7 +99,8 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      - MINIO_SERVER_URL=http://minio:9000
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
     volumes:
       - minio-data:/data
     command: server --console-address ":9001" /data

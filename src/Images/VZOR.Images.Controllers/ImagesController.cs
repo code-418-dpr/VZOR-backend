@@ -5,6 +5,7 @@ using VZOR.Framework.Models;
 using VZOR.Framework.Processors;
 using VZOR.Images.Application.Features.Commands.DeleteImage;
 using VZOR.Images.Application.Features.Commands.UploadImage;
+using VZOR.Images.Application.Features.Commands.UploadImageInS3;
 using VZOR.Images.Application.Features.Queries.GetImageById;
 using VZOR.Images.Application.Features.Queries.GetImages;
 using VZOR.Images.Application.Features.Queries.GetImagesByQuery;
@@ -14,9 +15,9 @@ namespace VZOR.Images.Controllers;
 
 public class ImagesController: ApplicationController
 {
-    [Permission("update")]
-    [HttpPost]
-    public async Task<ActionResult> UploadImages(
+    [Permission("process")]
+    [HttpPost("processing")]
+    public async Task<ActionResult> ProcessImages(
         [FromForm] UploadImagesRequest request,
         [FromServices] UserScopedData userScopedData,
         [FromServices] ProcessImageHandler handler,
@@ -34,6 +35,24 @@ public class ImagesController: ApplicationController
             return result.Errors.ToResponse();
         
         return Ok();
+    }
+    
+    [Permission("update")]
+    [HttpPost("uploading")]
+    public async Task<ActionResult> UploadImages(
+        [FromBody] UploadImageS3Request request,
+        [FromServices] UserScopedData userScopedData,
+        [FromServices] UploadImageInS3Handler handler,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UploadImageInS3Command(userScopedData.UserId, request.Files);
+
+        var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+            return result.Errors.ToResponse();
+        
+        return Ok(result);
     }
     
     [Permission("update")]

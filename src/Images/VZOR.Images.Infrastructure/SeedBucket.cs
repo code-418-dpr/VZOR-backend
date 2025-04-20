@@ -11,7 +11,7 @@ namespace VZOR.Images.Infrastructure;
 /// <param name="logger"></param>
 public class Seeding(IMinioClient fileProvider, ILogger<Seeding> logger)
 {
-    private const string BUCKET_NAME = "photos";
+    private const string BUCKET_NAME = "vzor";
 
     public async Task SeedBucket()
     {

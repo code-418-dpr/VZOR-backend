@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
 using VZOR.Core.Extension;
@@ -8,12 +9,14 @@ using VZOR.Images.Application.Repositories;
 using VZOR.Images.Contracts.Responses;
 using VZOR.Images.Domain;
 using VZOR.SharedKernel;
+using VZOR.SharedKernel.Constraints;
 using VZOR.SharedKernel.Errors;
 
 namespace VZOR.Images.Application.Features.Commands.UploadImageInS3;
 
 public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, UploadImageInS3Response>
 {
+    public const string BUCKET_NAME = "vzor";
     private readonly ILogger<UploadImageInS3Handler> _logger;
     private readonly IImageRepository _imageRepository;
     private readonly IS3FileProvider _s3FileProvider;
@@ -22,7 +25,7 @@ public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, Upl
 
     public UploadImageInS3Handler(
         ILogger<UploadImageInS3Handler> logger,
-        IImageRepository imageRepository,
+        [FromKeyedServices(Constraints.Database.ElasticSearch)]IImageRepository imageRepository,
         IS3FileProvider s3FileProvider,
         IValidator<UploadImageInS3Command> validator,
         IDateTimeProvider dateTimeProvider)
@@ -52,6 +55,7 @@ public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, Upl
 
             s3Files.Add(new FileMetadataS3
             {
+                BucketName = BUCKET_NAME,
                 Key = uploadLink,
                 FileName = file.FileName,
                 ContentType = file.ContentType,

@@ -15,7 +15,13 @@ public class S3FileProvider: IS3FileProvider
     private const int EXPIRATION_URL = 1;
     private readonly IAmazonS3 _client;
     private readonly ILogger<MinioProvider> _logger;
-    
+
+    public S3FileProvider(IAmazonS3 client, ILogger<MinioProvider> logger)
+    {
+        _client = client;
+        _logger = logger;
+    }
+
     public async Task<Result<string>> GetPresignedUrlForUpload(
         FileMetadataS3 fileMetadata,
         CancellationToken cancellationToken)
