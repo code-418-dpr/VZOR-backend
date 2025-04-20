@@ -92,11 +92,6 @@ public class ProcessImageHandler: ICommandHandler<ProcessImageCommand>
             var ids = images.Select(x => x.Id).ToList();
             var uploadLinks = images.Select(x => x.UploadLink).ToList();
             
-            var jobId = BackgroundJob.Schedule<ConfirmConsistencyJob>(
-                j => j.Execute(
-                    ids,BUCKET_NAME, uploadLinks),
-                TimeSpan.FromMinutes(1));
-            
             return Result.Success();
         }
         catch (Exception ex)

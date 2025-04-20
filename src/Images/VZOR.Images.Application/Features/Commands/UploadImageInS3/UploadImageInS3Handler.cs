@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
+using Hangfire;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VZOR.Core.Abstractions;
 using VZOR.Core.Extension;
 using VZOR.Images.Application.FileModels;
 using VZOR.Images.Application.FileProviders;
+using VZOR.Images.Application.Jobs;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Contracts.Responses;
 using VZOR.Images.Domain;
@@ -77,6 +79,14 @@ public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, Upl
             return uploadUrls.Errors;
         
         _logger.LogInformation("Uploaded {Count} files.", s3Files.Count);
+        
+        var ids = images.Select(x => x.Id).ToList();
+        var uploadLinks = images.Select(x => x.UploadLink).ToList();
+        
+        var jobId = BackgroundJob.Schedule<ConfirmConsistencyJob>(
+            j => j.Execute(
+                ids,BUCKET_NAME, uploadLinks),
+            TimeSpan.FromMinutes(3));
 
         var response = new UploadImageInS3Response(uploadUrls.Value.Select(v => new UploadImageUrl(v)));
 
