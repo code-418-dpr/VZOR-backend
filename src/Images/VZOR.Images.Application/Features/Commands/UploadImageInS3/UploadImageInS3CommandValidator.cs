@@ -19,5 +19,9 @@ public class UploadImageInS3CommandValidator: AbstractValidator<UploadImageInS3C
                     .NotEmpty()
                     .WithError(Errors.General.ValueIsRequired("ContentType"));
             });
+        
+        RuleFor(command => command.UserId)
+            .NotEmpty()
+            .WithError(Errors.General.ValueIsRequired("UserId"));
     }
 }
