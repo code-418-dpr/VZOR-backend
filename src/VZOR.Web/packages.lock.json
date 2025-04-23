@@ -348,10 +348,10 @@
       },
       "MassTransit": {
         "type": "Transitive",
-        "resolved": "8.3.7",
-        "contentHash": "luJPBitYnwnNbcHen1pcZ8WfyN8vW3mndn6HyKZAYkmpAGekVfUlJabNffDleO2qZisvOwbigau0HSCDK2NPjQ==",
+        "resolved": "8.4.0",
+        "contentHash": "czHZK8Lg4obJmIUTqJj5f9K/dtv5eXj7FLni/jxxStHT3jfH34NIe1d1iUBK4igYrV5R7q8IqHvULokypvatOw==",
         "dependencies": {
-          "MassTransit.Abstractions": "8.3.7",
+          "MassTransit.Abstractions": "8.4.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
           "Microsoft.Extensions.Diagnostics.HealthChecks": "9.0.0",
           "Microsoft.Extensions.Hosting.Abstractions": "9.0.0",
@@ -361,16 +361,16 @@
       },
       "MassTransit.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.3.7",
-        "contentHash": "F0Vb9G94DuGoMY84VOQMjxZX+OowA15GOUCdks+EA57Taz0W41nSkLG8uOnaoWOhivhgr5JTRmyPm6fRqv3uvQ=="
+        "resolved": "8.4.0",
+        "contentHash": "wGiNlHZOwAY1CRxxLfrr+hbP3Ooj9RK3JJZtGHlEmbDTLuSQu67skC2QdTVRCe2WmH/23XUwOzhNNYsFHdstQg=="
       },
       "MassTransit.RabbitMQ": {
         "type": "Transitive",
-        "resolved": "8.3.7",
-        "contentHash": "in/vKWUAVy3Xfx0pZ8ZZRATlKISXYta63U2U3xDYy6f31M+IgyKNvUxMsLQZTf7EwCperzGlTRr6CLbgJES2Cg==",
+        "resolved": "8.4.0",
+        "contentHash": "+dFq3z2iiEOe1zC9oTzaNK9wvQB4CZdeDR0OwkJytx87c+10gFHGWL6lj0eL5vBPDv72tUFaSDkuI084NjX26A==",
         "dependencies": {
-          "MassTransit": "8.3.7",
-          "RabbitMQ.Client": "7.1.1"
+          "MassTransit": "8.4.0",
+          "RabbitMQ.Client": "7.1.2"
         }
       },
       "Microsoft.AspNetCore.Authentication": {
@@ -1192,8 +1192,8 @@
       },
       "RabbitMQ.Client": {
         "type": "Transitive",
-        "resolved": "7.1.1",
-        "contentHash": "WggKwAQqPyV3h4RADfWgHA8LuVQkOgkh335rn578JZI6BDH8Z1ICztY32vr57NlhbN3eELPjLerPK3P+O/w/Yw==",
+        "resolved": "7.1.2",
+        "contentHash": "y3c6ulgULScWthHw5PLM1ShHRLhxg0vCtzX/hh61gRgNecL3ZC3WoBW2HYHoXOVRqTl99Br9E7CZEytGZEsCyQ==",
         "dependencies": {
           "System.IO.Pipelines": "8.0.0",
           "System.Threading.RateLimiting": "8.0.0"
@@ -2356,7 +2356,7 @@
           "Hangfire.AspNetCore": "[1.8.18, )",
           "Hangfire.Core": "[1.8.18, )",
           "Hangfire.PostgreSql": "[1.20.10, )",
-          "MassTransit.RabbitMQ": "[8.3.7, )",
+          "MassTransit.RabbitMQ": "[8.4.0, )",
           "Microsoft.EntityFrameworkCore": "[9.0.2, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[9.0.4, )",
           "Scrutor": "[6.0.1, )",
