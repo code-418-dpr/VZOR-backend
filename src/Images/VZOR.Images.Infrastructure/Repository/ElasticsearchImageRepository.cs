@@ -1,10 +1,13 @@
 using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Core.Bulk;
 using Elastic.Clients.Elasticsearch.QueryDsl;
+using ImageGrpc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Domain;
+using VZOR.SharedKernel.Errors;
 using MongoDatabaseSettings = VZOR.Images.Infrastructure.Options.MongoDatabaseSettings;
 using Result = VZOR.SharedKernel.Result;
 
@@ -70,6 +73,63 @@ public class ElasticsearchImageRepository : IImageRepository
             .FindAsync(images => ids.Contains(images.Id), cancellationToken: cancellationToken))
             .ToListAsync(cancellationToken);
         return images;
+    }
+
+    public async Task<Result> UpdateAsync(UploadImageResponse images, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var updates = (from image in images.Images
+                    let filter = Builders<Image>.Filter.Eq(x => x.Id, image.Id)
+                    let update = Builders<Image>.Update.Set(x => x.ProcessingResult.Description, image.Description)
+                        .Set(x => x.ProcessingResult.Objects, image.Tags.ToList())
+                        .Set(x => x.ProcessingResult.Text, image.RecognizedText)
+                    select new UpdateOneModel<Image>(filter, update)).Cast<WriteModel<Image>>()
+                .ToList();
+
+            if (updates.Count == 0)
+            {
+                return Error.Failure("updates.error", "Failed to update images");
+            }
+            
+            await _imageCollection.BulkWriteAsync(updates, cancellationToken: cancellationToken);
+                
+            var updatedIds = images.Images.Select(i => i.Id).ToList();
+            var updatedImages = await GetByIdsAsync(updatedIds, cancellationToken);
+                
+            await SynchronizeUpdatesWithElasticsearchAsync(updatedImages, cancellationToken);
+
+            return Result.Success();
+        }
+        catch (Exception ex)
+        {
+            return Error.Failure("database.update.error", "Failed to update images");
+        }
+    }
+    
+    private async Task SynchronizeUpdatesWithElasticsearchAsync(List<Image> updatedImages, CancellationToken cancellationToken)
+    {
+        var bulkRequest = new BulkRequest("images")
+        {
+            Operations = new List<IBulkOperation>()
+        };
+
+        foreach (var image in updatedImages)
+        {
+            bulkRequest.Operations.Add(new BulkIndexOperation<Image>(image)
+            {
+                Id = image.Id,
+                Index = "images"
+            });
+        }
+
+        var response = await _elasticsearchClient.BulkAsync(bulkRequest, cancellationToken);
+    
+        if (!response.IsValidResponse)
+        {
+            _logger.LogError($"Failed to sync updates with Elasticsearch: {response.DebugInformation}");
+            throw new Exception("Elasticsearch sync failed");
+        }
     }
 
     public async Task<List<Image>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)

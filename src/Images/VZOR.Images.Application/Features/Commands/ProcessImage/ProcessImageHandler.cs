@@ -104,8 +104,17 @@ public class ProcessImageHandler : ICommandHandler<ProcessImageCommand>
             }
             
             var response = await _grpcClient.UploadImageAsync(uploadImageRequest);
+
+            if (response.Images.Count == 0)
+            { 
+                throw new Exception("upload.photos.error");
+            }
             
-            
+            var result = await _repository.UpdateAsync(response, cancellationToken);
+            if (result.IsFailure)
+            {
+                throw new Exception("save.updated.photos.error");
+            }
 
             _logger.LogInformation("got proccessed images");
         }

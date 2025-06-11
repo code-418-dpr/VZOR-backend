@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ImageGrpc;
+using Microsoft.EntityFrameworkCore;
 using VZOR.Images.Application.Repositories;
 using VZOR.Images.Domain;
 using VZOR.Images.Infrastructure.Contexts;
@@ -27,6 +28,11 @@ public class ImageRepository(WriteDbContext context): IImageRepository
         var images = await context.Images.Where(v => ids.Contains(v.Id)).ToListAsync(cancellationToken);
         
         return images;
+    }
+
+    public Task<Result> UpdateAsync(UploadImageResponse images, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<Result> DeleteAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
