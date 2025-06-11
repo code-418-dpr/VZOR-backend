@@ -7,11 +7,21 @@ service ImageService {
 }
 
 message UploadImageRequest {
-  string image_id = 1;
-  bytes image_data = 2;
+  repeated ImageToProcess images = 1;
 }
 
 message UploadImageResponse {
-  bool success = 1;
-  string message = 2;
+  repeated ProcessedImage images = 1;
+}
+
+message ImageToProcess {
+  string id = 1;
+  string url = 2;
+}
+
+message ProcessedImage {
+  string id = 1;
+  string description = 2;
+  repeated string tags = 3;
+  string recognized_text = 4;
 }

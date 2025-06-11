@@ -15,6 +15,7 @@ public class S3FileProvider: IS3FileProvider
     private const int EXPIRATION_URL = 1;
     private readonly IAmazonS3 _client;
     private readonly ILogger<MinioProvider> _logger;
+    private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(MAX_DEGREE_OF_PARALLELISM);
 
     public S3FileProvider(IAmazonS3 client, ILogger<MinioProvider> logger)
     {
@@ -51,21 +52,56 @@ public class S3FileProvider: IS3FileProvider
             return Error.Failure("file.upload", "Fail to upload file in minio");
         }
     }
+    
+    private async Task<Result<string>> GetPresignedUrlForDownload(
+        FileMetadataS3 fileMetadata)
+    {
+        try
+        {
+            var presignedRequest = new GetPreSignedUrlRequest
+            {
+                BucketName = fileMetadata.BucketName,
+                Key = fileMetadata.Key,
+                Verb = HttpVerb.GET,
+                Expires = DateTime.UtcNow.AddDays(EXPIRATION_URL),
+                Protocol = Protocol.HTTP,
+            };
 
+            var url = await _client.GetPreSignedURLAsync(presignedRequest);
 
+            if (url is null)
+                return Error.NotFound("object.not.found", "File doesn`t exist in minio");
+
+            return url;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Fail to get file in minio");
+            return Error.Failure("file.get", "Fail to get file in minio");
+        }
+    }
+    
     public async Task<Result<IReadOnlyList<string>>> DownloadFiles(
         IEnumerable<FileMetadataS3> filesMetadata,
         CancellationToken cancellationToken = default)
     {
-        var semaphoreSlim = new SemaphoreSlim(MAX_DEGREE_OF_PARALLELISM);
         var filesList = filesMetadata.ToList();
-
         try
         {
-            await IsBucketExist(filesList.Select(f => f.BucketName), cancellationToken);
+            /*await IsBucketExist(filesList.Select(f => f.BucketName), cancellationToken);*/
 
             var tasks = filesList.Select(async file =>
-                await GetPresignedUrlForDownload(file, semaphoreSlim, cancellationToken));
+            {
+                await _semaphoreSlim.WaitAsync(cancellationToken);
+                try
+                {
+                    return await GetPresignedUrlForDownload(file);
+                }
+                finally
+                {
+                    _semaphoreSlim.Release();
+                }
+            });
 
             var pathsResult = await Task.WhenAll(tasks);
 
@@ -200,42 +236,6 @@ public class S3FileProvider: IS3FileProvider
                 "Fail to upload files in minio");
 
             return Error.Failure("files.upload", "Fail to upload files in minio");
-        }
-    }
-
-    private async Task<Result<string>> GetPresignedUrlForDownload(
-        FileMetadataS3 fileMetadata,
-        SemaphoreSlim semaphoreSlim,
-        CancellationToken cancellationToken)
-    {
-        await semaphoreSlim.WaitAsync(cancellationToken);
-
-        try
-        {
-            var presignedRequest = new GetPreSignedUrlRequest
-            {
-                BucketName = fileMetadata.BucketName,
-                Key = fileMetadata.Key,
-                Verb = HttpVerb.GET,
-                Expires = DateTime.UtcNow.AddDays(EXPIRATION_URL),
-                Protocol = Protocol.HTTP,
-            };
-
-            var url = await _client.GetPreSignedURLAsync(presignedRequest);
-
-            if (url is null)
-                return Error.NotFound("object.not.found", "File doesn`t exist in minio");
-
-            return url;
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Fail to get file in minio");
-            return Error.Failure("file.get", "Fail to get file in minio");
-        }
-        finally
-        {
-            semaphoreSlim.Release();
         }
     }
     

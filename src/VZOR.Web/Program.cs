@@ -1,4 +1,6 @@
 using Hangfire;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 using VZOR.Accounts.Domain;
 using VZOR.Accounts.Infrastructure.Seeding;
 using VZOR.Framework.Middlewares;
@@ -11,7 +13,16 @@ using VZOR.Web.Extensions;
 DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ConfigureHttpsDefaults(o =>
+    {
+        //o.ClientCertificateValidation += ValidateClientCertificate;
+        o.AllowAnyClientCertificate();
+        o.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
+        o.CheckCertificateRevocation = false;
+    });
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors();

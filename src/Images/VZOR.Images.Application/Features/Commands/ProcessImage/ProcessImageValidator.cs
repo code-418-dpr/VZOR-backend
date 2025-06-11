@@ -13,17 +13,12 @@ public class ProcessImageValidator : AbstractValidator<ProcessImageCommand>
             .NotEmpty()
             .WithError(Errors.General.ValueIsRequired("user_id"));
 
-        RuleForEach(c => c.Images)
+        RuleForEach(c => c.FileIds)
             .ChildRules(f =>
             {
-                f.RuleFor(c => c.FileName)
-                    .Must(ext => Constraints.Extensions.Contains(Path.GetExtension(ext)))
+                f.RuleFor(c => c)
                     .NotEmpty()
-                    .WithError(Error.Null("filename.is.null", "filename cannot be null or empty"));
-
-                f.RuleFor(c => c.Content)
-                    .Must(s => s.Length is > 0 and <= 15 * 1024 * 1024)
-                    .WithError(Error.Null("stream.empty", "stream cannot be empty"));
+                    .WithError(Error.Null("file.id.empty", "file id cannot be empty"));
             });
     }
 }

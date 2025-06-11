@@ -22,6 +22,7 @@
     
     <ItemGroup>
       <Folder Include="Services\" />
+      <Folder Include="Services\Protos\" />
     </ItemGroup>
 
 </Project>

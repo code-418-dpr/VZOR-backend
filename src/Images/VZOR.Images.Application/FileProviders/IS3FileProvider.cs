@@ -14,4 +14,5 @@ public interface IS3FileProvider
     Task<Result<List<string>>> GetPresignedUrlsForUploadParallel(
         IEnumerable<FileMetadataS3> fileMetadata,
         CancellationToken cancellationToken = default);
+    
 }

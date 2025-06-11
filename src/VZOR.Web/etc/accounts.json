@@ -4,11 +4,13 @@
       "read",
       "create",
       "update",
-      "delete"
+      "delete",
+      "process"
     ],
     "Participant": [
       "read",
-      "update"
+      "update",
+      "process"
     ]
   },
   "Permissions": {
@@ -16,7 +18,8 @@
       "read",
       "create",
       "update",
-      "delete"
+      "delete",
+      "process"
     ]
   }
 }

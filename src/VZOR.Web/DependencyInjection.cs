@@ -1,7 +1,11 @@
-﻿using Hangfire;
+﻿using System.IO.Compression;
+using System.Net.Security;
+using Grpc.Net.Compression;
+using Hangfire;
 using Hangfire.PostgreSql;
 using ImageGrpc;
 using MassTransit;
+using Microsoft.AspNetCore.Mvc;
 using VZOR.Accounts.Application;
 using VZOR.Accounts.Infrastructure;
 using VZOR.Framework.Models;
@@ -24,7 +28,7 @@ public static class DependencyInjection
             .AddHangfire(configuration)
             .AddMessageBus(configuration)
             .AddGrpc(configuration);
-        
+
         return services;
     }
 
@@ -35,14 +39,13 @@ public static class DependencyInjection
             options.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
-                .UsePostgreSqlStorage(
-                    c =>
-                        c.UseNpgsqlConnection(configuration.GetConnectionString("DefaultConnection")));
+                .UsePostgreSqlStorage(c =>
+                    c.UseNpgsqlConnection(configuration.GetConnectionString("DefaultConnection")));
         });
-        
+
         return services;
     }
-    
+
     private static IServiceCollection AddFramework(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
@@ -50,7 +53,7 @@ public static class DependencyInjection
 
         return services;
     }
-    
+
     private static IServiceCollection AddAccountsManagementModule(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -58,10 +61,10 @@ public static class DependencyInjection
         services
             .AddAccountsApplication()
             .AddAccountsInfrastructure(configuration);
-        
+
         return services;
     }
-    
+
     private static IServiceCollection AddMessageBus(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -69,7 +72,7 @@ public static class DependencyInjection
         services.AddMassTransit(configure =>
         {
             configure.SetKebabCaseEndpointNameFormatter();
-            
+
             configure.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host(new Uri(configuration["RabbitMQ:Host"]!), h =>
@@ -79,29 +82,37 @@ public static class DependencyInjection
                 });
 
                 cfg.Durable = true;
-                
+
                 cfg.ConfigureEndpoints(context);
             });
         });
-        
+
         return services;
     }
 
     private static IServiceCollection AddGrpc(this IServiceCollection services, IConfiguration configuration)
     {
+        var grpcServiceUrl = configuration["Grpc:ImageServiceUrl"];
+
         services.AddGrpcClient<ImageService.ImageServiceClient>(options =>
-        {
-            options.Address = new Uri(configuration["Grpc:ImageServiceUrl"]!);
-        });
-        
-        services.AddGrpc(options =>
-        {
-            options.EnableDetailedErrors = true;
-        });
+            {
+                options.Address = new Uri(grpcServiceUrl!);
+            })
+            .ConfigureChannel(grpcChannelOptions =>
+            {
+                grpcChannelOptions.HttpHandler = new SocketsHttpHandler
+                {
+                    EnableMultipleHttp2Connections = true,
+                };
+
+                grpcChannelOptions.UnsafeUseInsecureChannelCallCredentials = true;
+            });
+
+        services.AddGrpc(options => { options.EnableDetailedErrors = true; });
 
         return services;
     }
-    
+
     private static IServiceCollection AddImagesModule(
         this IServiceCollection services,
         IConfiguration configuration)
@@ -109,7 +120,7 @@ public static class DependencyInjection
         services
             .AddImagesInfrastructure(configuration)
             .AddImagesApplication();
-        
+
         return services;
     }
 }

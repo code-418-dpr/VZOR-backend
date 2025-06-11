@@ -20,7 +20,7 @@ public class ImageMongoRepository: IImageRepository
     {
         await _imageCollection.InsertManyAsync(images, cancellationToken: cancellationToken);
     }
-
+    
     public async Task<Image?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         var image = await (await _imageCollection.FindAsync(image => 

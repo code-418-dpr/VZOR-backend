@@ -267,6 +267,15 @@
           "Grpc.Net.ClientFactory": "2.70.0"
         }
       },
+      "Grpc.Core": {
+        "type": "Transitive",
+        "resolved": "2.46.6",
+        "contentHash": "ZoRg3KmOJ2urTF4+u3H0b1Yv10xzz2Y/flFWS2tnRmj8dbKLeiJaSRqu4LOBD3ova90evqLkVZ85kUkC4JT4lw==",
+        "dependencies": {
+          "Grpc.Core.Api": "2.46.6",
+          "System.Memory": "4.5.3"
+        }
+      },
       "Grpc.Core.Api": {
         "type": "Transitive",
         "resolved": "2.70.0",
@@ -2383,6 +2392,7 @@
         "type": "Project",
         "dependencies": {
           "Google.Protobuf": "[4.0.0-rc2, )",
+          "Grpc.Core": "[2.46.6, )",
           "VZOR.Core": "[1.0.0, )",
           "VZOR.Images.Contracts": "[1.0.0, )",
           "VZOR.Images.Domain": "[1.0.0, )",

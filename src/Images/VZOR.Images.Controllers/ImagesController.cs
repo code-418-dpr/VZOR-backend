@@ -15,19 +15,15 @@ namespace VZOR.Images.Controllers;
 
 public class ImagesController: ApplicationController
 {
-    [Permission("process")]
+    //[Permission("process")]
     [HttpPost("processing")]
     public async Task<ActionResult> ProcessImages(
-        [FromForm] UploadImagesRequest request,
+        [FromBody] UploadImagesRequest request,
         [FromServices] UserScopedData userScopedData,
         [FromServices] ProcessImageHandler handler,
         CancellationToken cancellationToken = default)
     {
-        await using var fileProcessor = new FormFileProcessor();
-
-        var fileDtos = fileProcessor.Process(request.Files);
-
-        var command = new ProcessImageCommand(userScopedData.UserId, fileDtos);
+        var command = new ProcessImageCommand(userScopedData.UserId, request.FileIds);
 
         var result = await handler.Handle(command, cancellationToken);
 
@@ -37,7 +33,7 @@ public class ImagesController: ApplicationController
         return Ok();
     }
     
-    [Permission("update")]
+    //[Permission("update")]
     [HttpPost("uploading")]
     public async Task<ActionResult> UploadImages(
         [FromBody] UploadImageS3Request request,
@@ -55,7 +51,7 @@ public class ImagesController: ApplicationController
         return Ok(result);
     }
     
-    [Permission("update")]
+    //[Permission("update")]
     [HttpPost("removing")]
     public async Task<ActionResult> DeleteImage(
         [FromBody] Guid imageId,
@@ -73,7 +69,7 @@ public class ImagesController: ApplicationController
         return Ok();
     }
     
-    [Permission("read")]
+    //[Permission("read")]
     [HttpGet]
     public async Task<ActionResult> GetImages(
         [FromQuery] GetImagesByUserIdRequest request,
@@ -98,7 +94,7 @@ public class ImagesController: ApplicationController
         return Ok(result);
     }
     
-    [Permission("read")]
+    //[Permission("read")]
     [HttpGet("{imageId:guid}")]
     public async Task<ActionResult> GetImageById(
         [FromRoute] Guid imageId,
@@ -116,7 +112,7 @@ public class ImagesController: ApplicationController
         return Ok(result);
     }
     
-    [Permission("read")]
+    //[Permission("read")]
     [HttpGet("searching")]
     public async Task<ActionResult> SearchImageByQuery(
         [FromQuery] GetImagesByQueryRequest request,
