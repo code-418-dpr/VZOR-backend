@@ -28,7 +28,7 @@ public class ProcessImageHandler : ICommandHandler<ProcessImageCommand>
     public ProcessImageHandler(
         ILogger<ProcessImageHandler> logger,
         IValidator<ProcessImageCommand> validator,
-        [FromKeyedServices(Constraints.Database.Mongo)]
+        [FromKeyedServices(Constraints.Database.ElasticSearch)]
         IImageRepository repository,
         ImageService.ImageServiceClient grpcClient,
         IS3FileProvider s3FileProvider)
