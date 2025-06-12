@@ -16,7 +16,7 @@ using VZOR.SharedKernel.Errors;
 
 namespace VZOR.Images.Application.Features.Commands.UploadImageInS3;
 
-public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, UploadImageInS3Response>
+public class UploadImageInS3Handler : ICommandHandler<UploadImageInS3Command, UploadImageInS3Response>
 {
     public const string BUCKET_NAME = "vzor";
     private readonly ILogger<UploadImageInS3Handler> _logger;
@@ -27,7 +27,8 @@ public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, Upl
 
     public UploadImageInS3Handler(
         ILogger<UploadImageInS3Handler> logger,
-        [FromKeyedServices(Constraints.Database.ElasticSearch)]IImageRepository imageRepository,
+        [FromKeyedServices(Constraints.Database.ElasticSearch)]
+        IImageRepository imageRepository,
         IS3FileProvider s3FileProvider,
         IValidator<UploadImageInS3Command> validator,
         IDateTimeProvider dateTimeProvider)
@@ -62,7 +63,7 @@ public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, Upl
                 FileName = file.FileName,
                 ContentType = file.ContentType,
             });
-                
+
             images.Add(new Image
             {
                 Id = id.ToString(),
@@ -71,24 +72,26 @@ public class UploadImageInS3Handler: ICommandHandler<UploadImageInS3Command, Upl
                 UploadDate = _dateTimeProvider.UtcNow
             });
         }
-        
+
         await _imageRepository.AddRangeAsync(images, cancellationToken);
-        
+
         var uploadUrls = await _s3FileProvider.GetPresignedUrlsForUploadParallel(s3Files, cancellationToken);
         if (uploadUrls.IsFailure)
             return uploadUrls.Errors;
-        
+
         _logger.LogInformation("Uploaded {Count} files.", s3Files.Count);
-        
+
         var ids = images.Select(x => x.Id).ToList();
         var uploadLinks = images.Select(x => x.UploadLink).ToList();
-        
+
         var jobId = BackgroundJob.Schedule<ConfirmConsistencyJob>(
             j => j.Execute(
-                ids,BUCKET_NAME, uploadLinks),
+                ids, BUCKET_NAME, uploadLinks),
             TimeSpan.FromMinutes(3));
 
-        var response = new UploadImageInS3Response(uploadUrls.Value.Select(v => new UploadImageUrl(v)));
+
+        var response = new UploadImageInS3Response(uploadUrls.Value.Zip(images,
+            (url, image) => new UploadImageUrl(Guid.Parse(image.Id), url)));
 
         return response;
     }
