@@ -88,7 +88,7 @@ public class S3FileProvider: IS3FileProvider
         var filesList = filesMetadata.ToList();
         try
         {
-            /*await IsBucketExist(filesList.Select(f => f.BucketName), cancellationToken);*/
+            await IsBucketExist(filesList.Select(f => f.BucketName), cancellationToken);
 
             var tasks = filesList.Select(async file =>
             {
